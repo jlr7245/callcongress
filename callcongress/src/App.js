@@ -30,25 +30,28 @@ class App extends Component {
 
   authenticate() {
     var provider = new firebase.auth.GithubAuthProvider();
+    console.log(provider);
     firebase.auth().signInWithPopup(provider)
       .then((res) => {
+        console.log(res);
         if (res.credential) {
           var token = res.credential.accessToken;
-        } else {
-          //this.createUser(res.user.uid);
         }
         const user = axios.create({
           baseURL: fbaseUrl,
-          auth: token
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
         });
-        this.setState({uid: res.user.uid, useraxios: user});
+        this.setState({uid: res.user.uid, useraxios: user, token: token});
       }).catch((err) => {
         console.log(err.message);
       });
   }
 
   testPost() {
-    this.state.useraxios.post('/users.json', { id: this.state.uid, joinedOn: moment() })
+    this.state.useraxios.post(`/users.json`, { id: this.state.uid, joinedOn: moment() })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.message));
   }
