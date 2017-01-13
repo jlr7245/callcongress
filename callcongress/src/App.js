@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
+/// ==== LIBRARIES === ///
 import axios from 'axios';
 import moment from 'moment';
 import firebase from 'firebase';
+/// === COMPONENTS === ///
+import Initial from './components/Initial';
+/// === KEYS === ///
 import firebaseSpecs from './components/key.js';
+/// === STYLES === ///
 import './App.css';
 
-//* setting API variables *//
+/// === SETTING API THINGS === ///
 const fbaseKey = firebaseSpecs.apiKey;
 const fbaseUrl = firebaseSpecs.databaseURL;
 
+/// === APP COMPONENT STARTS HERE === ///
 class App extends Component {
   constructor() {
     super();
@@ -20,13 +26,19 @@ class App extends Component {
 
     //* state *//
     this.state = {
+      pageType: 'initial',
       uid: null,
     }
   }
 
+  ///// ======== LIFECYCLE METHODS ======== /////
+
   componentDidMount() {
 
   }
+
+
+  //// ======= AUTHENTICATION HELL ======== ///////
 
   authenticate() {
     var provider = new firebase.auth.GithubAuthProvider();
@@ -76,10 +88,22 @@ class App extends Component {
     }
   }
 
+  ///// ======= SETTING UP WHICH PAGE ==== /////
+  renderPage() {
+    if (this.state.pageType === 'initial') {
+      // stuff goes here
+      return <Initial />
+    }
+  }
+
   render() {
+
     return (
       <div className="App">
+        <div className="container">
           {this.renderLogin()}
+          {this.renderPage()}
+        </div>
       </div>
     );
   }
