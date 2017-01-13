@@ -35,23 +35,26 @@ class App extends Component {
       .then((res) => {
         console.log(res);
         if (res.credential) {
-          var token = res.credential.accessToken;
-        }
-        const user = axios.create({
-          baseURL: fbaseUrl,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        });
-        this.setState({uid: res.user.uid, useraxios: user, token: token});
+          var tokenFirst = res.credential.accessToken;
+          console.log(tokenFirst);
+          firebase.auth().currentUser.getToken(true).then((token) => {
+           const user = axios.create({
+              baseURL: `${fbaseUrl}`,
+              headers: {Authorization: token}
+            });
+            this.setState({uid: res.user.uid, useraxios: user, token: token});
+          });
+
+      } else {console.log('no auth!')}
       }).catch((err) => {
         console.log(err.message);
       });
   }
 
   testPost() {
-    this.state.useraxios.post(`/users.json`, { id: this.state.uid, joinedOn: moment() })
+    let id = this.state.uid;
+    console.log(this.state);
+    this.state.useraxios.post(`/users/${id}/post.json`, { id: this.state.uid, joinedOn: moment() })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.message));
   }
