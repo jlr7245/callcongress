@@ -8,6 +8,7 @@ class FakeAuth extends React.Component {
     super();
     //binds
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
     this.checkLoginState = this.checkLoginState.bind(this);
     this.tryingToLogIn = this.tryingToLogIn.bind(this);
     this.newUser = this.newUser.bind(this);
@@ -26,16 +27,22 @@ class FakeAuth extends React.Component {
     console.log('mounted!');
   }
 
+  shouldComponentUpdate() { // this is a bad fix and i shouldn't do it. the REAL fix is to put a lot of this stuff back into app.js :(
+    if (this.state.loginState === 'logged-in') {
+      return false;
+    } else return true;
+  }
+
   componentDidUpdate() {
     if (this.state.loginState === 'attempting') {
-      console.log('gotta make that axios call for the userarray');
-      this.userArray = ['hello', 'world'];
-      console.log(this.userArray);
-      console.log(this.state.loginState);
+      fbaseAXIOS.get('/users/userarray.json')
+        .then((res) => { this.userArray = res.data })
+        .catch((err) => console.log(err));
     } else if (this.state.loginState === 'new-confirm') {
       this.userArray.push(this.state.newuser);
-      console.log(this.userArray);
-      console.log(this.state.loginState);
+      fbaseAXIOS.patch('/users.json', {userarray: this.userArray})
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     } else {console.log('nothin we gotta do')}
   }
 
@@ -53,12 +60,27 @@ class FakeAuth extends React.Component {
     console.log(e);
   }
 
+  usersMap(usersArray, loggingIn) {
+    for (let i = 0; i < usersArray.length; i++) {
+      if (usersArray[i][0] === loggingIn[0] && usersArray[i][1] === loggingIn[1]) {
+        return usersArray[i][2];
+      }
+    }
+  }
+
   formSubmitted(e) {
     e.preventDefault();
-    const submittedName = e.target.name.value;
+    const submittedName = e.target.username.value;
     const submittedKey = e.target.key.value;
     let loggingIn = [submittedName, submittedKey];
-    console.log(loggingIn);
+    let uid = this.usersMap(this.userArray, loggingIn);
+    console.log(loggingIn, this.userArray, uid);
+    if (uid !== undefined) {
+      this.setState({
+        loginState: 'logged-in',
+        uid: uid
+      })
+    } else {this.setState({loginState: 'established-fail'})}
   }
 
   //-- new user post
@@ -98,11 +120,11 @@ class FakeAuth extends React.Component {
       );
     } else if (this.state.loginState === 'attempting') {
       return (
-        <div className='loginform'>
+        <div className='loginform' onSubmit={(e) => this.formSubmitted(e)}>
           <form name='fakeauth'>
             <input type='text' name='username' placeholder='Name' />
             <input type='number' name='key' placeholder='Key' />
-            <input type='button' name='login-button' value='Log in!' onClick={(e) => this.formSubmitted(e)}/>
+            <button type='submit'>Log in!</button>
           </form>
           <p className='request-key'>Don't have a key? <span className='requestlink' onClick={() => this.newUser()}>Request one!</span></p>
         </div>
@@ -128,6 +150,13 @@ class FakeAuth extends React.Component {
             <p>Welcome {this.state.newuser[0]}! As a reminder, your passcode is {this.state.newuser[1]} - please remember it.</p>
           </div>
           )
+    } else if (this.state.loginState === 'logged-in') {
+      this.props.setUser(this.state.uid); // THIS IS BAD AND I SHOULDn'T DO IT
+      return (
+        <div className='dashboardlink'>
+          <button className='dash' onClick={(e) => this.props.toDash(e)}>Go to dashboard!</button>
+        </div>
+        )
     }
   }
 

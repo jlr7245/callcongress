@@ -29,7 +29,8 @@ class App extends Component {
     //this.testPost = this.testPost.bind(this);
 
     //==fake auth==//
-    // !!!! still a method that goes here
+    this.setUser = this.setUser.bind(this);
+    this.toDash = this.toDash.bind(this);
 
     ///== zip binds ==///
     this.getInput = this.getInput.bind(this);
@@ -57,6 +58,22 @@ class App extends Component {
   /// method to set the state to the current UID
   /// method to go to dashboard
 
+  setUser(uid) {
+    fbaseAXIOS.get(`/users/${uid}.json`)
+      .then((res) => {
+        this.setState({
+          uid: uid,
+          userData: res.data
+        }); /// for some reason this sends fakeAuth in to a constant updating loop
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  toDash() {
+    this.setState({pageType: 'dash'})
+  }
+
 
 
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
@@ -78,7 +95,9 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="fakelogin">
-            <FakeAuth />
+            <FakeAuth
+              setUser={this.setUser}
+              toDash={this.toDash} />
           </div>
           {this.renderPage()}
         </div>
