@@ -34,16 +34,13 @@ class App extends Component {
     //this.testPost = this.testPost.bind(this);
 
     //==fake auth==//
-    this.tryingToLogIn = this.tryingToLogIn.bind(this);
-    this.newUser = this.newUser.bind(this);
-    this.createFakeAuthUser = this.createFakeAuthUser.bind(this);
+    // !!!! still a method that goes here
 
     ///== zip binds ==///
     this.getInput = this.getInput.bind(this);
 
     //* state *//
     this.state = {
-      loginState: 'new', /// should be 'logged-out'
       pageType: 'initial',
       uid: null,
     }
@@ -54,6 +51,48 @@ class App extends Component {
   componentDidMount() {
 
   }
+
+
+
+
+
+
+  //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
+
+  /// method to set the state to the current UID
+
+
+
+  //// ===== INITIAL TO LOCATION SWITCH ==== ////
+  getInput(e) {
+    console.log(e);
+  }
+
+  ///// ======= SETTING UP WHICH PAGE ==== /////
+  renderPage() {
+    if (this.state.pageType === 'initial') {
+      // stuff goes here
+      return <Initial getInput={this.getInput} />
+    }
+  }
+
+  render() {
+     //// note: fakeauth still needs a prop
+    return (
+      <div className="App">
+        <div className="container">
+          <div className="fakelogin">
+            <FakeAuth />
+          </div>
+          {this.renderPage()}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+
 
 
   //// ======= AUTHENTICATION HELL ======== ///////
@@ -105,86 +144,3 @@ class App extends Component {
       return (<p>You are logged in!</p>)
     }
   }*/
-
-
-
-  //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
-  //// !!!! move some of these into the FakeAuth component !!!! ///
-  generateFakeToken() {
-    let a = Math.floor(Math.random() * 10000000);
-    let b = a.toString();
-    if (b.length < 7) {
-      b = b + '0';
-    }
-    return b;
-  }
-
-  getUser(e) {
-    console.log(e);
-  }
-
-  tryingToLogIn() {
-    this.setState({loginState: 'attempting'});
-  }
-
-  formSubmitted(e) {
-    e.preventDefault();
-    console.log(e);
-  }
-
-  newUser() {
-    this.setState({loginState: 'new'});
-  }
-
-  createFakeAuthUser(e, token) {
-    e.preventDefault();
-    let newName = e.target.username.value;
-    const userObject = {
-      name: newName,
-      token: token
-    }
-    fbaseAXIOS.post('/users.json', userObject)
-      .then((res) => {
-        let key = res.data.name;
-        let newUserArray = [newName, token, res.data.name];
-        console.log(newUserArray);
-      }).catch((err) => console.log(err));
-  }
-
-  //// ===== INITIAL TO LOCATION SWITCH ==== ////
-  getInput(e) {
-    console.log(e);
-  }
-
-  ///// ======= SETTING UP WHICH PAGE ==== /////
-  renderPage() {
-    if (this.state.pageType === 'initial') {
-      // stuff goes here
-      return <Initial getInput={this.getInput} />
-    }
-  }
-
-  render() {
-
-    return (
-      <div className="App">
-        <div className="container">
-          <div className="fakelogin">
-            <FakeAuth
-              generateFakeToken={this.generateFakeToken}
-              getUser={this.getUser}
-              loginState={this.state.loginState}
-              newUser={this.newUser}
-              tryingToLogIn={this.tryingToLogIn}
-              formSubmitted={this.formSubmitted}
-              createFakeAuthUser={this.createFakeAuthUser}
-              />
-          </div>
-          {this.renderPage()}
-        </div>
-      </div>
-    );
-  }
-}
-
-export default App;
