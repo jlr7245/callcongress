@@ -1,2 +1,6 @@
 #keys
 ./keys/*
+./keys/key.js
+./keys/news.js
+./keys/zip.js
+./keys
