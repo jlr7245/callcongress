@@ -2,25 +2,20 @@ import React, { Component } from 'react';
 /// ==== LIBRARIES === ///
 import axios from 'axios';
 import moment from 'moment';
-import firebase from 'firebase';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
 import FakeAuth from './components/FakeAuth';
 /// === KEYS & APIS === ///
-import firebaseSpecs from './components/keys/key';
+import fbaseAXIOS from './components/keys/key';
 import sunlightAXIOS from './components/keys/sunlight';
 import zipAXIOS from './components/keys/zip';
 import newsAXIOS from './components/keys/news';
 /// === STYLES === ///
 import './App.css';
 
-/// === SETTING API THINGS === ///
-const fbaseKey = firebaseSpecs.apiKey;
-const fbaseUrl = firebaseSpecs.databaseURL;
 
-const fbaseAXIOS = axios.create({
-  baseURL: fbaseUrl
-});
+
+
 
 /// === APP COMPONENT STARTS HERE === ///
 class App extends Component {
@@ -60,6 +55,7 @@ class App extends Component {
   //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
 
   /// method to set the state to the current UID
+  /// method to go to dashboard
 
 
 

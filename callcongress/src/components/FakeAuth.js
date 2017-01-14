@@ -1,11 +1,13 @@
 import React from 'react';
 import moment from 'moment';
+import axios from 'axios';
 import fbaseAXIOS from './keys/key';
 
 class FakeAuth extends React.Component {
   constructor() {
     super();
     //binds
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.checkLoginState = this.checkLoginState.bind(this);
     this.tryingToLogIn = this.tryingToLogIn.bind(this);
     this.newUser = this.newUser.bind(this);
@@ -15,6 +17,8 @@ class FakeAuth extends React.Component {
       loginState: 'logged-out',
       currentUser: null
     }
+    //other
+    this.userArray = []; // if this is in state we run into a componentDidUpdate loop
   }
 
 ///=== lifecycle methods
@@ -23,7 +27,16 @@ class FakeAuth extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('updated!');
+    if (this.state.loginState === 'attempting') {
+      console.log('gotta make that axios call for the userarray');
+      this.userArray = ['hello', 'world'];
+      console.log(this.userArray);
+      console.log(this.state.loginState);
+    } else if (this.state.loginState === 'new-confirm') {
+      this.userArray.push(this.state.newuser);
+      console.log(this.userArray);
+      console.log(this.state.loginState);
+    } else {console.log('nothin we gotta do')}
   }
 
 ///=== functions that just set login flow states
@@ -110,7 +123,11 @@ class FakeAuth extends React.Component {
         </div>
       )
     } else if (this.state.loginState === 'new-confirm') {
-
+        return (
+          <div className='welcome'>
+            <p>Welcome {this.state.newuser[0]}! As a reminder, your passcode is {this.state.newuser[1]} - please remember it.</p>
+          </div>
+          )
     }
   }
 
