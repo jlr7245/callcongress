@@ -5,6 +5,7 @@ import moment from 'moment';
 import firebase from 'firebase';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
+import FakeAuth from './components/FakeAuth';
 /// === KEYS & APIS === ///
 import firebaseSpecs from './components/keys/key';
 import sunlightAXIOS from './components/keys/sunlight';
