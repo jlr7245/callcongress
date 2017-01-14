@@ -133,7 +133,7 @@ class App extends Component {
 
   createFakeAuthUser(e, token) {
     e.preventDefault();
-    console.log(e.form, token);
+    console.log(e.target, token, e.target.username.value);
   }
 
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
