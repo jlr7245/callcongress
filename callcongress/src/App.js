@@ -18,6 +18,10 @@ import './App.css';
 const fbaseKey = firebaseSpecs.apiKey;
 const fbaseUrl = firebaseSpecs.databaseURL;
 
+const fbaseAXIOS = axios.create({
+  baseURL: fbaseUrl
+});
+
 /// === APP COMPONENT STARTS HERE === ///
 class App extends Component {
   constructor() {
@@ -105,6 +109,7 @@ class App extends Component {
 
 
   //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
+  //// !!!! move some of these into the FakeAuth component !!!! ///
   generateFakeToken() {
     let a = Math.floor(Math.random() * 10000000);
     let b = a.toString();
@@ -133,7 +138,17 @@ class App extends Component {
 
   createFakeAuthUser(e, token) {
     e.preventDefault();
-    console.log(e.target, token, e.target.username.value);
+    let newName = e.target.username.value;
+    const userObject = {
+      name: newName,
+      token: token
+    }
+    fbaseAXIOS.post('/users.json', userObject)
+      .then((res) => {
+        let key = res.data.name;
+        let newUserArray = [newName, token, res.data.name];
+        console.log(newUserArray);
+      }).catch((err) => console.log(err));
   }
 
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
