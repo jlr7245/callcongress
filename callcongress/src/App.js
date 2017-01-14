@@ -100,6 +100,18 @@ class App extends Component {
 
 
   //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
+  generateFakeToken() {
+    let a = Math.floor(Math.random() * 10000000);
+    let b = a.toString();
+    if (b.length < 7) {
+      b = b + '0';
+    }
+    return b;
+  }
+
+  getUser(e) {
+    console.log(e);
+  }
 
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
   getInput(e) {
@@ -119,6 +131,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
+          <div className="fakelogin">
+            <FakeAuth
+              generateFakeToken={this.generateFakeToken}
+              getUser={this.getUser}
+              />
+          </div>
           {this.renderPage()}
         </div>
       </div>
