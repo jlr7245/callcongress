@@ -5,8 +5,11 @@ import moment from 'moment';
 import firebase from 'firebase';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
-/// === KEYS === ///
-import firebaseSpecs from './components/key.js';
+/// === KEYS & APIS === ///
+import firebaseSpecs from './components/keys/key';
+import sunlightAXIOS from './components/keys/sunlight';
+import zipAXIOS from './components/keys/zip';
+import newsAXIOS from './components/keys/news';
 /// === STYLES === ///
 import './App.css';
 
@@ -21,8 +24,9 @@ class App extends Component {
     //* binds *//
     this.componentDidMount = this.componentDidMount.bind(this);
     //this.renderLogin = this.renderLogin.bind(this);
-    this.authenticate = this.authenticate.bind(this);
-    this.testPost = this.testPost.bind(this);
+    //this.authenticate = this.authenticate.bind(this);
+    //this.testPost = this.testPost.bind(this);
+    this.getInput = this.getInput.bind(this);
 
     //* state *//
     this.state = {
@@ -34,13 +38,18 @@ class App extends Component {
   ///// ======== LIFECYCLE METHODS ======== /////
 
   componentDidMount() {
-
+    newsAXIOS.get('stories', {params: {
+      'language': ['en'],
+      'published_at_start': 'NOW-1HOUR',
+      'title': 'ACA OR Obamacare',
+    }}).then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 
 
   //// ======= AUTHENTICATION HELL ======== ///////
 
-  authenticate() {
+  /*authenticate() {
     var provider = new firebase.auth.GithubAuthProvider();
     console.log(provider);
     firebase.auth().signInWithPopup(provider)
@@ -73,7 +82,7 @@ class App extends Component {
 
 /*  createUser(id) {
     axios.post(`${fbaseURL}/users/${id}.json?apiKey=${}`)
-  }*/
+  }
 
   renderLogin () {
     if (this.state.uid === null) {
@@ -86,13 +95,22 @@ class App extends Component {
       console.log(this.state.uid);
       return (<p>You are logged in!</p>)
     }
+  }*/
+
+
+
+  //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
+
+  //// ===== INITIAL TO LOCATION SWITCH ==== ////
+  getInput(e) {
+    console.log(e);
   }
 
   ///// ======= SETTING UP WHICH PAGE ==== /////
   renderPage() {
     if (this.state.pageType === 'initial') {
       // stuff goes here
-      return <Initial />
+      return <Initial getInput={this.getInput} />
     }
   }
 
@@ -101,7 +119,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          {this.renderLogin()}
           {this.renderPage()}
         </div>
       </div>

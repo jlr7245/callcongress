@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 
+/// == firebase == ///
+
 var firebaseSpecs = {
   apiKey: "AIzaSyBxL2dzJI1BH8RKwLDZF0rTVfeDcVlTnyk",
   authDomain: "callcongress1.firebaseapp.com",
@@ -11,3 +13,8 @@ var firebaseSpecs = {
 firebase.initializeApp(firebaseSpecs);
 
 export default firebaseSpecs;
+
+/// == congress === ///
+
+
+
