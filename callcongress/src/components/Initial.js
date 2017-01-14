@@ -11,7 +11,7 @@ class Initial extends React.Component {
         </div>
         <div className="right">
           <div className="input">
-            <input type="number" ref={(input) => this.input = input.value} onChange={(e) => this.props.getInput(e.target.value)} />
+            <input type="number" onKeyPress={(e) => this.props.getInput(e.target.value)} />
             {(this.props.errorMsg) ? <p>Please enter a valid zip.</p> : ''}
           </div>
         </div>

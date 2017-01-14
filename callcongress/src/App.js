@@ -24,13 +24,22 @@ class App extends Component {
     super();
     //* binds *//
     this.componentDidMount = this.componentDidMount.bind(this);
+    //===initial auth attempt===//
     //this.renderLogin = this.renderLogin.bind(this);
     //this.authenticate = this.authenticate.bind(this);
     //this.testPost = this.testPost.bind(this);
+
+    //==fake auth==//
+    this.tryingToLogIn = this.tryingToLogIn.bind(this);
+    this.newUser = this.newUser.bind(this);
+    this.createFakeAuthUser = this.createFakeAuthUser.bind(this);
+
+    ///== zip binds ==///
     this.getInput = this.getInput.bind(this);
 
     //* state *//
     this.state = {
+      loginState: 'new', /// should be 'logged-out'
       pageType: 'initial',
       uid: null,
     }
@@ -39,12 +48,7 @@ class App extends Component {
   ///// ======== LIFECYCLE METHODS ======== /////
 
   componentDidMount() {
-    newsAXIOS.get('stories', {params: {
-      'language': ['en'],
-      'published_at_start': 'NOW-1HOUR',
-      'title': 'ACA OR Obamacare',
-    }}).then((res) => console.log(res))
-      .catch((err) => console.log(err));
+
   }
 
 
@@ -114,6 +118,24 @@ class App extends Component {
     console.log(e);
   }
 
+  tryingToLogIn() {
+    this.setState({loginState: 'attempting'});
+  }
+
+  formSubmitted(e) {
+    e.preventDefault();
+    console.log(e);
+  }
+
+  newUser() {
+    this.setState({loginState: 'new'});
+  }
+
+  createFakeAuthUser(e, token) {
+    e.preventDefault();
+    console.log(e.form, token);
+  }
+
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
   getInput(e) {
     console.log(e);
@@ -136,6 +158,11 @@ class App extends Component {
             <FakeAuth
               generateFakeToken={this.generateFakeToken}
               getUser={this.getUser}
+              loginState={this.state.loginState}
+              newUser={this.newUser}
+              tryingToLogIn={this.tryingToLogIn}
+              formSubmitted={this.formSubmitted}
+              createFakeAuthUser={this.createFakeAuthUser}
               />
           </div>
           {this.renderPage()}
