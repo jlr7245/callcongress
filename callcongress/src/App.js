@@ -38,6 +38,7 @@ class App extends Component {
 
     //== dash binds ==//
     this.userDetailsSubmit = this.userDetailsSubmit.bind(this);
+    this.editUser = this.editUser.bind(this);
 
     //* state *//
     this.state = {
@@ -100,9 +101,15 @@ class App extends Component {
     /// doing stuff with our object
     fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: currentUser})
       .then((res) => {
-        this.setState({userData: currentUser}); /// could use res.data[this.state.uid] instead & get rid of some mess up top?
+        this.setState({userData: currentUser}); /// could use res.data[this.state.uid] instead & get rid of some mess up top? this feels more more stable though.
       })
       .catch((err) => console.log(err));
+  }
+
+  editUser(e) {
+    let userEditing = {...this.state.userData};
+    userEditing.status = 'editing';
+    this.setState({userData: userEditing});
   }
 
   ///// ======= SETTING UP WHICH PAGE ==== /////
@@ -114,6 +121,7 @@ class App extends Component {
       return <Dashboard
         user={this.state.userData}
         userDetailsSubmit={this.userDetailsSubmit}
+        editUser={this.editUser}
         />
     }
   }
