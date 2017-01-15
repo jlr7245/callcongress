@@ -8,7 +8,6 @@ class FakeAuth extends React.Component {
     super();
     //binds
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
     this.checkLoginState = this.checkLoginState.bind(this);
     this.tryingToLogIn = this.tryingToLogIn.bind(this);
     this.newUser = this.newUser.bind(this);
@@ -27,12 +26,6 @@ class FakeAuth extends React.Component {
     console.log('mounted!');
   }
 
-  shouldComponentUpdate() { // this is a bad fix and i shouldn't do it. the REAL fix is to put a lot of this stuff back into app.js :(
-    if (this.state.loginState === 'logged-in') {
-      return false;
-    } else return true;
-  }
-
   componentDidUpdate() {
     if (this.state.loginState === 'attempting') {
       fbaseAXIOS.get('/users/userarray.json')
@@ -43,7 +36,11 @@ class FakeAuth extends React.Component {
       fbaseAXIOS.patch('/users.json', {userarray: this.userArray})
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
-    } else {console.log('nothin we gotta do')}
+      this.props.setUser(this.state.uid);
+    } else if (this.state.loginState === 'established-confirm') {
+      this.props.setUser(this.state.uid);
+      this.setState({loginState: 'logged-in'}); /// SEEMS TO WORK? but is it best practice
+    }
   }
 
 ///=== functions that just set login flow states
@@ -77,7 +74,7 @@ class FakeAuth extends React.Component {
     console.log(loggingIn, this.userArray, uid);
     if (uid !== undefined) {
       this.setState({
-        loginState: 'logged-in',
+        loginState: 'established-confirm',
         uid: uid
       })
     } else {this.setState({loginState: 'established-fail'})}
@@ -151,7 +148,6 @@ class FakeAuth extends React.Component {
           </div>
           )
     } else if (this.state.loginState === 'logged-in') {
-      this.props.setUser(this.state.uid); // THIS IS BAD AND I SHOULDn'T DO IT
       return (
         <div className='dashboardlink'>
           <button className='dash' onClick={(e) => this.props.toDash(e)}>Go to dashboard!</button>
