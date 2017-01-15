@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import axios from 'axios';
 import fbaseAXIOS from './keys/key';
 
 class FakeAuth extends React.Component {
@@ -36,6 +35,7 @@ class FakeAuth extends React.Component {
       fbaseAXIOS.patch('/users.json', {userarray: this.userArray})
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      this.setState({loginState: 'logged-in'});
       this.props.setUser(this.state.uid);
     } else if (this.state.loginState === 'established-confirm') {
       this.props.setUser(this.state.uid);
@@ -92,7 +92,6 @@ class FakeAuth extends React.Component {
     }
     fbaseAXIOS.post('/users.json', userObject)
       .then((res) => {
-        let key = res.data.name;
         let newUserArray = [newName, token, res.data.name];
         this.setState({
           loginState: 'new-confirm',
@@ -105,7 +104,7 @@ class FakeAuth extends React.Component {
     let a = Math.floor(Math.random() * 10000000);
     let b = a.toString();
     if (b.length < 7) {
-      b = b + '0';
+      b+='0';
     }
     return b;
   }

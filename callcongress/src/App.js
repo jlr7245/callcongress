@@ -5,6 +5,7 @@ import moment from 'moment';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
 import FakeAuth from './components/FakeAuth';
+import Dashboard from './components/Dashboard';
 /// === KEYS & APIS === ///
 import fbaseAXIOS from './components/keys/key';
 import sunlightAXIOS from './components/keys/sunlight';
@@ -34,6 +35,9 @@ class App extends Component {
 
     ///== zip binds ==///
     this.getInput = this.getInput.bind(this);
+
+    //== dash binds ==//
+    this.userDetailsSubmit = this.userDetailsSubmit.bind(this);
 
     //* state *//
     this.state = {
@@ -81,11 +85,36 @@ class App extends Component {
     console.log(e);
   }
 
+  //// ==== DASHBOARD METHODS ===== /////
+  userDetailsSubmit(e) {
+    e.preventDefault();
+    ///setting form fields to variables
+    let userZip = e.target.zip.value;
+    let topicsString = e.target.topics.value;
+    let topicsArray = topicsString.replace(/, /g, ',').split(',');
+    /// adding form info to object
+    let currentUser = {...this.state.userData};
+    currentUser.zip = userZip;
+    currentUser.topics = topicsArray;
+    currentUser.status = 'established';
+    /// doing stuff with our object
+    fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: currentUser})
+      .then((res) => {
+        this.setState({userData: currentUser}); /// could use res.data[this.state.uid] instead & get rid of some mess up top?
+      })
+      .catch((err) => console.log(err));
+  }
+
   ///// ======= SETTING UP WHICH PAGE ==== /////
   renderPage() {
     if (this.state.pageType === 'initial') {
       // stuff goes here
       return <Initial getInput={this.getInput} />
+    } else if (this.state.pageType === 'dash') {
+      return <Dashboard
+        user={this.state.userData}
+        userDetailsSubmit={this.userDetailsSubmit}
+        />
     }
   }
 
