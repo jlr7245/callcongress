@@ -24,10 +24,11 @@ class Dashboard extends React.Component {
       return (
         <div className='intakeform'>
           <form name='intake' className='intake' onSubmit={(e) => this.props.userDetailsSubmit(e)}>
-            <p className='label'>What is your zipcode?</p>
+            <label>What is your zipcode?</label>
             <input type='number' name='zip' placeholder='Enter your five-digit zip code here.' />
-            <p className='label'>Please enter a few news topics you are interested in. Topics should be comma-separated.</p>
+            <label>Please enter a few news topics you are interested in.</label>
             <input type='text' name='topics' placeholder='ACA, veteran affairs, foreign policy' />
+            <label className='sm'> Topics should be comma-separated.</label>
             <button type='submit'>Save</button>
           </form>
         </div>

@@ -140,7 +140,9 @@ class App extends Component {
               changePage={this.changePage}
                />
           </div>
-          {this.renderPage()}
+          <div className="pagecontainer">
+            {this.renderPage()}
+          </div>
         </div>
       </div>
     );

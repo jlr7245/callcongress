@@ -5,7 +5,7 @@ class Initial extends React.Component {
 
   render() {
     return (
-      <div className="pagecontainer">
+      <div className="init">
         <div className="left">
           <h1>Decisions are made by those who show up.</h1>
         </div>

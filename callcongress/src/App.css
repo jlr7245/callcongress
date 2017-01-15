@@ -113,6 +113,7 @@ body {
   .ltgbg {background-color: #ddd;}
 
 /* Login */
+
 .logged-out button {
   display: block;
   position: fixed;
@@ -129,20 +130,19 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+
 }
 .logged-in nav button {
   padding: 20px 20px;
-  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom:1px solid #eee;
   cursor: pointer;
   background-color: white;
   font-family: 'aktiv-grotesk';
   font-size:0.8em;
+  max-width:max-content;
 }
 
-.logged-out button:hover,
-.logged-in nav button:hover {
-
-}
 
 .fakelogin {
   display: flex;
@@ -186,25 +186,38 @@ body {
 }
 
 .loginform input,
-.signup input {
+.signup input,
+.intakeform input {
   display: block;
   border-bottom: 3px solid #0BBCD6;
   font-family:'aktiv-grotesk', sans-serif;
   font-size:1em;
-  width:100%;
   margin:15px 0;
   transition: 0.2s;
 }
 
+.loginform input,
+.signup input {
+  width: 100%;
+}
+
+.intakeform input {
+  width: 80%;
+  margin: 15px auto;
+  text-align:center;
+}
+
 .loginform input:focus,
-.signup input:focus {
+.signup input:focus,
+.intakeform input:focus {
   border-color: #E6625E;
   transition: 0.2s;
 }
 
 .loginform button,
 .signup button,
-.oops button {
+.oops button,
+.intakeform button {
   font-size:1em;
   color: #555;
   font-family:'warnock pro';
@@ -217,7 +230,10 @@ body {
 
 .loginform button:hover,
 .signup button:hover,
-.oops button:hover {
+.oops button:hover,
+.logged-out button:hover,
+.logged-in nav button:hover,
+.intakeform button:hover {
   background-color: #eee;
   transition: 0.2s;
 }
@@ -239,7 +255,8 @@ body {
 }
 
     /* fakeauth new */
-.signup label {
+.signup label,
+.intakeform label.sm {
   display: block;
   font-size:0.7em;
 }
@@ -271,9 +288,37 @@ body {
 }
 
 
-/* Initial */
-.pagecontainer {
+/* ====== DASHBOARD ====== */
 
+.dash {
+  display: flex;
+  flex-grow:1;
+  justify-content:center;
+}
+
+.intakeform {
+  padding:100px;
+  box-sizing:border-box;
+  background-color: white;
+  text-align:center;
+  display:flex;
+}
+
+.intakeform label {
+  display:block;
+}
+
+.dashboard {
+  flex-grow:1;
+  background-color:white;
+  height:100vh;
+  display:flex;
+  align-items:center;
+}
+
+
+/* Initial */
+.pagecontainer, .init {
   display: flex;
   flex-direction: row;
   align-items: center;
