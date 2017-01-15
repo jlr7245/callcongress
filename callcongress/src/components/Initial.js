@@ -12,6 +12,7 @@ class Initial extends React.Component {
         <div className="right">
           <div className="input">
             <input type="number" onKeyPress={(e) => this.props.getInput(e.target.value)} />
+            <p className="ziplabel rd">Please enter your zip code to get started.</p>
             {(this.props.errorMsg) ? <p>Please enter a valid zip.</p> : ''}
           </div>
         </div>

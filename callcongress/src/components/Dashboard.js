@@ -6,6 +6,10 @@ class Dashboard extends React.Component {
     this.renderDash = this.renderDash.bind(this);
   }
 
+  componentDidMount() {
+    console.log(`i'm boutta do it`); /// i DON't want to make api calls here because i DON'T want to run into the state disaster that i ran into in fakeauth. okay. I'm going to have to draw this out.
+  }
+
   listTopics() {
     let topicsArray = []
     for (let topic of this.props.user.topics) {
@@ -21,7 +25,7 @@ class Dashboard extends React.Component {
         <div className='intakeform'>
           <form name='intake' className='intake' onSubmit={(e) => this.props.userDetailsSubmit(e)}>
             <p className='label'>What is your zipcode?</p>
-            <input type='number' name='zip' {(user.hasOwnProperty('topicsstring')) ? defaultValue={topicsstring} : defaultValue='' } placeholder='Enter your five-digit zip code here.' />
+            <input type='number' name='zip' placeholder='Enter your five-digit zip code here.' />
             <p className='label'>Please enter a few news topics you are interested in. Topics should be comma-separated.</p>
             <input type='text' name='topics' placeholder='ACA, veteran affairs, foreign policy' />
             <button type='submit'>Save</button>

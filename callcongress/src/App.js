@@ -31,7 +31,7 @@ class App extends Component {
 
     //==fake auth==//
     this.setUser = this.setUser.bind(this);
-    this.toDash = this.toDash.bind(this);
+    this.changePage = this.changePage.bind(this);
 
     ///== zip binds ==///
     this.getInput = this.getInput.bind(this);
@@ -69,14 +69,17 @@ class App extends Component {
         this.setState({
           uid: uid,
           userData: res.data
-        }); /// for some reason this sends fakeAuth in to a constant updating loop
+        });
         console.log(res);
       })
       .catch((err) => console.log(err));
   }
 
-  toDash() {
-    this.setState({pageType: 'dash'})
+  changePage(e, page) {
+    console.log(page);
+    if (this.state.pageType !== page) {
+      this.setState({pageType: page});
+    }
   }
 
 
@@ -134,7 +137,8 @@ class App extends Component {
           <div className="fakelogin">
             <FakeAuth
               setUser={this.setUser}
-              toDash={this.toDash} />
+              changePage={this.changePage}
+               />
           </div>
           {this.renderPage()}
         </div>

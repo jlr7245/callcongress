@@ -123,8 +123,8 @@ class FakeAuth extends React.Component {
       return (
         <div className='loginform' onSubmit={(e) => this.formSubmitted(e)}>
           <form name='fakeauth'>
-            <input type='text' name='username' placeholder='Name' />
-            <input type='number' name='key' placeholder='Key' />
+            <input type='text' required name='username' placeholder='Name' />
+            <input type='number' required name='key' placeholder='Key' />
             <button type='submit'>Log in!</button>
           </form>
           <p className='request-key'>Don't have a key? <span className='requestlink' onClick={() => this.newUser()}>Request one!</span></p>
@@ -136,19 +136,28 @@ class FakeAuth extends React.Component {
         <div className='signup'>
           <form name='fakesignup' onSubmit={(e) => this.createFakeAuthUser(e, fakeToken)}>
             <label>Please enter your name or username.</label>
-            <input type='text' name='username' placeholder='Name' />
-            <label>Here is your seven-digit passcode. Please keep track of this passcode; it cannot be reset.</label>
+            <input type='text' name='username' required placeholder='Name' />
+            <label>Here is your seven-digit passcode.</label>
             <p className='signup-token'>{fakeToken}</p>
-            <p>There will be other stuff down here like selecting zip topics & so on</p>
+            <label>Please remember this passcode! It cannot be reset.</label>
             <button type='submit' name='signup-button'>Sign up!</button>
           </form>
-          <h6>THIS IS NOT A SECURE SITE. DO NOT SUBMIT ANY SENSITIVE INFORMATION.</h6>
+          <h6 className='rd'>This is not a secure site. DO NOT submit any sensitive information.</h6>
         </div>
       )
     } else if (this.state.loginState === 'logged-in') {
       return (
-        <div className='dashboardlink'>
-          <button className='dash' onClick={(e) => this.props.toDash(e)}>Go to dashboard!</button>
+        <nav>
+          <button className='home' onClick={(e) => this.props.changePage(e, 'initial')}><i className='fa fa-home fa-2x'></i></button>
+          <button className='dash' onClick={(e) => this.props.changePage(e, 'dash')}>Dashboard</button>
+        </nav>
+        )
+    } else if (this.state.loginState === 'established-fail') {
+      return (
+        <div className='oops'>
+          <h3 className='rd'>Oh no!</h3>
+          <p>We couldn't find you.</p>
+          <button onClick={() => this.tryingToLogIn()}>Click here to try again.</button>
         </div>
         )
     }
@@ -157,7 +166,9 @@ class FakeAuth extends React.Component {
   render() {
     return (
       <div className='auth'>
-        {this.checkLoginState()}
+        <div className={this.state.loginState}>
+          {this.checkLoginState()}
+        </div>
       </div>
     )
   }

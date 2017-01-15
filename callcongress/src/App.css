@@ -1,24 +1,323 @@
-.App {
+
+/* http://meyerweb.com/eric/tools/css/reset/
+
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr,
+th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for
+older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+  font-family: 'aktiv-grotesk', sans-serif;
+}
+body p, body label {
+  font-family: 'aktiv-grotesk', sans-serif;
+}
+h2,h3,h4,h5,h6 {
+  font-family: 'aktiv-grotesk';
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ------ end reset.css, begin jbase */
+
+/* button & input reset */
+button, input {
+    background: none;
+    border: 0;
+    color: inherit;
+
+    /* cursor: default; */
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-appearance: button; /* for input */
+    -moz-appearance:button;
+    -webkit-user-select: none; /* for button */
+       -moz-user-select: none;
+        -ms-user-select: none;
+}
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+button:focus, input:focus {
+  outline:none;
+}
+
+/* Setup */
+
+body {
+  font-size: 16px;
+  margin: 0;
+  background-color: #eee;
+}
+
+.container {
+  background-image: url('../public/media/dkbg.jpg');
+  width: 100vw;
+  min-height: 100vh;
+  box-sizing:border-box;
+  background-color: white;
+  display:flex;
+}
+
+/* colors */
+.bl {color: #0BBCD6;}
+  .blbg {background-color: #0BBCD6}
+.rd {color: #E6625E;}
+  .rdbg {color: #E6625E;}
+.wht {color: white;}
+  .whtbg {background-color: white;}
+.ltg {color: #ddd;}
+  .ltgbg {background-color: #ddd;}
+
+/* Login */
+.logged-out button {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px 45px;
+  border: 1px solid #eee;
+  background-color:white;
+  cursor:pointer;
+  font-family: 'aktiv-grotesk';
+}
+.logged-in nav {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.logged-in nav button {
+  padding: 20px 20px;
+  border-left: 1px solid #eee;
+  cursor: pointer;
+  background-color: white;
+  font-family: 'aktiv-grotesk';
+  font-size:0.8em;
+}
+
+.logged-out button:hover,
+.logged-in nav button:hover {
+
+}
+
+.fakelogin {
+  display: flex;
+}
+
+.auth {
+  display: flex;
+  align-items: stretch;
+  flex-direction:column;
+}
+
+.attempting,
+.new,
+.established-fail {
+  background-color: white;
+  display: flex;
+  width: 350px;
+  flex-grow:1;
+  align-items: center;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+    /* fakeauth attempting & form styling */
+
+.attempting {
+  animation: expand 0.8s;
+}
+
+@keyframes expand {
+  0% {opacity: 0; width:0;}
+  10% {opacity: 100%;}
+  100% {width:350px;}
+}
+
+.loginform {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginform input,
+.signup input {
+  display: block;
+  border-bottom: 3px solid #0BBCD6;
+  font-family:'aktiv-grotesk', sans-serif;
+  font-size:1em;
+  width:100%;
+  margin:15px 0;
+  transition: 0.2s;
+}
+
+.loginform input:focus,
+.signup input:focus {
+  border-color: #E6625E;
+  transition: 0.2s;
+}
+
+.loginform button,
+.signup button,
+.oops button {
+  font-size:1em;
+  color: #555;
+  font-family:'warnock pro';
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 15px 0 30px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.loginform button:hover,
+.signup button:hover,
+.oops button:hover {
+  background-color: #eee;
+  transition: 0.2s;
+}
+
+.request-key {
+  line-height: 1.5em;
+  font-size:0.8em;
+}
+
+.requestlink {
+  display: block;
+  cursor: pointer;
+  border-bottom: 3px solid #E6625E;
+  text-align: center;
+  font-family: 'warnock pro';
+  font-size: 1.5em;
+  font-style:oblique;
+  margin-top: 5px;
+}
+
+    /* fakeauth new */
+.signup label {
+  display: block;
+  font-size:0.7em;
+}
+
+.signup-token {
+  font-size: 3em;
+  margin: 10px 0;
+  font-weight: 900;
+}
+
+.new h6 {
+  font-size: 0.8em;
+  line-height: 1em;
+  font-family: 'warnock pro';
+  font-style: oblique;
+}
+
+    /* fakeauth fail */
+.oops {
+  text-align: center;
+  width: 100%;
+}
+
+.oops h3 {
+  font-size: 2em;
+  font-family: 'warnock pro';
+  font-style:oblique;
+  line-height: 2em;
+}
+
+
+/* Initial */
+.pagecontainer {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 7;
+}
+
+.left {
+  flex-grow: 1;
+  display: flex;
+  max-width: 50vw;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.right {
+  flex-grow: 1;
+  display: flex;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.left h1 {
+  color: white;
+  font-size: 4em;
+  text-align: right;
+}
+
+.right .input input {
+  color: white;
+  font-size: 2em;
+  display: block;
+  padding: 15px;
+  border-bottom: 3px solid white;
+  width: 25vw;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.right .input .ziplabel {
+  font-size: 0.8em;
+  margin: 15px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@media screen and (min-width: 1000px) {
+  .container {
+  }
+  body {font-size: 18px;}
 }
