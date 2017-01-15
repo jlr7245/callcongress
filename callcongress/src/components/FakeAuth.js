@@ -28,10 +28,14 @@ class FakeAuth extends React.Component {
   componentDidUpdate() {
     if (this.state.loginState === 'attempting') {
       fbaseAXIOS.get('/users/userarray.json')
-        .then((res) => { this.userArray = res.data })
+        .then((res) => {
+          console.log(res);
+          this.userArray = res.data;
+          console.log(res.data);
+        })
         .catch((err) => console.log(err));
     } else if (this.state.loginState === 'new-confirm') {
-      this.userArray.push(this.state.newuser);
+      (this.userArray !== undefined && this.userArray !== null) ? this.userArray.push(this.state.newuser) : this.userArray = [this.state.newuser];
       fbaseAXIOS.patch('/users.json', {userarray: this.userArray})
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
@@ -71,7 +75,6 @@ class FakeAuth extends React.Component {
     const submittedKey = e.target.key.value;
     let loggingIn = [submittedName, submittedKey];
     let uid = this.usersMap(this.userArray, loggingIn);
-    console.log(loggingIn, this.userArray, uid);
     if (uid !== undefined) {
       this.setState({
         loginState: 'established-confirm',
@@ -92,10 +95,12 @@ class FakeAuth extends React.Component {
     }
     fbaseAXIOS.post('/users.json', userObject)
       .then((res) => {
+        let key = res.data.name;
         let newUserArray = [newName, token, res.data.name];
         this.setState({
           loginState: 'new-confirm',
-          newuser: newUserArray })
+          newuser: newUserArray,
+          uid: key })
       }).catch((err) => console.log(err));
   }
 
@@ -140,12 +145,6 @@ class FakeAuth extends React.Component {
           <h6>THIS IS NOT A SECURE SITE. DO NOT SUBMIT ANY SENSITIVE INFORMATION.</h6>
         </div>
       )
-    } else if (this.state.loginState === 'new-confirm') {
-        return (
-          <div className='welcome'>
-            <p>Welcome {this.state.newuser[0]}! As a reminder, your passcode is {this.state.newuser[1]} - please remember it.</p>
-          </div>
-          )
     } else if (this.state.loginState === 'logged-in') {
       return (
         <div className='dashboardlink'>
