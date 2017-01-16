@@ -1,4 +1,5 @@
 import React from 'react';
+import Events from './Events';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -36,13 +37,27 @@ class Dashboard extends React.Component {
     } else if (user.status === 'established') {
       return (
         <div className='dashboard'>
-          <h1 className='name'>Hello, {user.name}.</h1>
-          <h3>Your zip code is set to {user.zip}.</h3>
-          <h3>You are watching the following topics:</h3>
-          <ul>
-            {this.listTopics()}
-          </ul>
-          <button onClick={(e) => this.props.editUser(e)}>Edit</button>
+          <div className='left-dash'>
+            <div className='nameandinfo'>
+              <h1>Hello, {user.name}.</h1>
+              <div className='info'>
+                <span className='infolabel'>Your info</span>
+                <span className='infodata'> Your zip code is set to {user.zip}.</span>
+              </div>
+            </div>
+            <div className='events'>
+              <Events addNewEvent={this.props.addNewEvent} />
+            </div>
+          </div>
+          <div className='right-dash'>
+            <h3>You are watching the following topics:</h3>
+              <ul>
+                {this.listTopics()}
+              </ul>
+          </div>
+          <div className='settings'>
+            <button onClick={(e) => this.props.editUser(e)}><i className="fa fa-cogs fa-3x ltg"></i></button>
+          </div>
         </div>
       )
     }
