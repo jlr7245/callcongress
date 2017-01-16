@@ -12,14 +12,14 @@ class FakeAuth extends React.Component {
     this.newUser = this.newUser.bind(this);
     this.createFakeAuthUser = this.createFakeAuthUser.bind(this);
     //state
-/*    this.state = {
+    this.state = {
       loginState: 'logged-out',
       currentUser: null
-    }*/
-    this.state = {
+    }
+/*    this.state = {
       loginState: 'logged-in',
       currentUser: '-KaYnwgAuJlqhwMF1djY'
-    }
+    }*/
     //other
     this.userArray = []; // if this is in state we run into a componentDidUpdate loop
   }

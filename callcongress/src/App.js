@@ -24,6 +24,7 @@ class App extends Component {
     super();
     //* binds *//
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     //===initial auth attempt===//
     //this.renderLogin = this.renderLogin.bind(this);
     //this.authenticate = this.authenticate.bind(this);
@@ -45,23 +46,9 @@ class App extends Component {
     this.addNewEvent = this.addNewEvent.bind(this);
 
     //* state *//
-/*    this.state = { /// commented out for testing purposes
+    this.state = {
       pageType: 'initial',
       uid: null,
-    }*/
-
-    this.state = {
-      pageType: 'dash',
-      uid: '-KaYnwgAuJlqhwMF1djY',
-      userData: {
-        joinedOn: "2017-01-15T20:27:01.125Z",
-        name: "jlr7245",
-        status: "established",
-        token: "5537083",
-        topics: ["obamacare","lgbt","cory booker"],
-        zip: "11727"
-      },
-      userArray: [["jsilv","5251551","-KaV5jTtVBcPRVYygFFF"],["test","5599173","-KaV5ueCj6gSf0MxY5j4"],["test2","3540463","-KaV68Kn2ekSI7_N3Pux"],["","2948282","-KaYjRvixWqvtni_f_g2"],["jsilv","8115959","-KaYjmVPgw9ZbwwA8laN"],["jessieriley","3011045","-KaYkpFXitYGSoM9eji5"],["jlr7245","5537083","-KaYnwgAuJlqhwMF1djY"],["jsilv","1994928","-KaYr5e4cJiwwUA21sTU"]]
     }
   }
 
@@ -69,6 +56,16 @@ class App extends Component {
 
   componentDidMount() {
 
+  }
+
+  componentDidUpdate() {
+    if (this.state.justUpdated) {
+      fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: this.state.userData})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+    }
   }
 
 
@@ -116,13 +113,26 @@ class App extends Component {
     return sunlightAXIOS.get(`legislators/locate?zip=${i}`);
   }
 
-  getBoth(i, user) {
+  getBoth(i,user) {
     axios.all([this.getSurroundingZips(i), this.getLocationSenators(i)])
       .then(axios.spread((zips, sens) => {
         console.log(zips.data.zip_codes);
-        console.log(sens.data.results);
+        let senIdArray = sens.data.results.map((res) => {
+          return res.bioguide_id
+        });
+        user.watching = senIdArray;
+        user.surrounding = zips.data.zip_codes;
+        this.setState({
+          userData: user,
+          justUpdated: true,
+        })
       }));
   }
+
+  ///this still needs to be done at some point
+   /*   fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: currentUser})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err)); */
 
   userDetailsSubmit(e) {
     e.preventDefault();
@@ -135,12 +145,9 @@ class App extends Component {
     currentUser.zip = userZip;
     currentUser.topics = topicsArray;
     currentUser.status = 'established';
+    this.getBoth(userZip, currentUser)
     /// doing stuff with our object
-    fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: currentUser})
-      .then((res) => {
-        this.setState({userData: currentUser});
-      })
-      .catch((err) => console.log(err));
+
   }
 
   editUser(e) {
