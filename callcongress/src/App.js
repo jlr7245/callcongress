@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 /// ==== LIBRARIES === ///
 import axios from 'axios';
-import moment from 'moment';
+//import moment from 'moment';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
 import FakeAuth from './components/FakeAuth';
@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 import fbaseAXIOS from './components/keys/key';
 import sunlightAXIOS from './components/keys/sunlight';
 import zipAXIOS from './components/keys/zip';
-import newsAXIOS from './components/keys/news';
+//import newsAXIOS from './components/keys/news';
 /// === STYLES === ///
 import './App.css';
 
@@ -49,22 +49,52 @@ class App extends Component {
     this.state = {
       pageType: 'initial',
       uid: null,
+      areaevents: []
     }
   }
 
   ///// ======== LIFECYCLE METHODS ======== /////
 
   componentDidMount() {
-
+    fbaseAXIOS.get(`/events/eventziparray.json`)
+      .then((res) => {
+        console.log(res);
+        this.setState({zipsWithEvents: res.data});
+        console.log(res.data);
+      })
   }
 
   componentDidUpdate() {
+    if (this.state.justLoggedIn || this.state.newEvent) {
+      let zipKeysToBeRendered = this.state.zipsWithEvents.filter((i) => (this.state.userData.surrounding.indexOf(i[0]) !== -1)).map((i) => {return i[1]});
+      let myEventArray = [];
+        axios.all(zipKeysToBeRendered.map((i) => {
+          fbaseAXIOS.get(`/events/${i}.json`)
+            .then((res) => {
+              myEventArray.push(res.data);
+              console.log(myEventArray);
+            })
+        })).then((res) => {
+          console.log(res);
+          this.setState({
+            eventArray: myEventArray,
+            justLoggedIn: false,
+            newEvent: false}) /// i feel like I'm doing something wrong here.
+        });
+    }
     if (this.state.justUpdated) {
       fbaseAXIOS.put(`/users/${this.state.uid}.json`, this.state.userData)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
+    }
+    if (this.state.newEvent) {
+      fbaseAXIOS.put(`/events/eventziparray.json`, this.state.zipsWithEvents)
+        .then((res) => {
+          this.setState({newEvent: false});
+          console.log(res);
+        });
     }
   }
 
@@ -83,7 +113,8 @@ class App extends Component {
       .then((res) => {
         this.setState({
           uid: uid,
-          userData: res.data
+          userData: res.data,
+          justLoggedIn: true
         });
         console.log(res);
       })
@@ -129,11 +160,6 @@ class App extends Component {
       }));
   }
 
-  ///this still needs to be done at some point
-   /*   fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: currentUser})
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err)); */
-
   userDetailsSubmit(e) {
     e.preventDefault();
     ///setting form fields to variables
@@ -147,7 +173,6 @@ class App extends Component {
     currentUser.status = 'established';
     this.getBoth(userZip, currentUser)
     /// doing stuff with our object
-
   }
 
   editUser(e) {
@@ -161,6 +186,7 @@ class App extends Component {
     e.preventDefault();
     let data = e.target;
     let date = data.date.value+'T'+data.time.value+':00.000';
+    let newEventZip = data.zip.value;
     let formInput = {
       name: data.name.value,
       type: data.type.value,
@@ -175,8 +201,9 @@ class App extends Component {
     fbaseAXIOS.post('/events.json', formInput)
       .then((res) => {
         console.log(res);
-        this.setState({eventsInArea: [formInput]});
+        this.setState({zipsWithEvents: this.state.zipsWithEvents.push([newEventZip, res.data.name]), newEvent: true});
       })
+    e.target.reset();
   }
 
   ///// ======= SETTING UP WHICH PAGE ==== /////
@@ -191,6 +218,7 @@ class App extends Component {
         editUser={this.editUser}
         addNewEvent={this.addNewEvent}
         uid={this.state.uid}
+        areaEvents={this.state.eventArray}
         />
     }
   }

@@ -14,8 +14,15 @@ class Events extends React.Component {
     console.log('im here');
   }
 
-  renderEvents(eventArray) {
-    for (let event of eventArray) {
+  renderEvents(myEvents) {
+    console.log(myEvents);
+    if (typeof myEvents === 'string') {
+      return <p>Loading...</p>
+    } else {
+      return <p>ready to load events</p>
+    }
+    /*for (let event of myEvents) {
+      console.log(event);
       let buttonOrNot;
       if (event.belongsTo === this.props.uid) {
         buttonOrNot = (<button>Edit</button>)
@@ -25,7 +32,7 @@ class Events extends React.Component {
       return (
         <div className='individualevent'>
             <div className='eventrow'>
-              <img src={`../public/media/${event.type}`} />
+              <img src={`../public/media/${event.type}`}  alt={event.type} />
               <h1>{event.name}</h1>
             </div>
             <div className='eventrow'>
@@ -45,7 +52,7 @@ class Events extends React.Component {
             </div>
           </div>
         )
-    }
+    }*/
   }
 
   addNew() {
@@ -85,7 +92,7 @@ class Events extends React.Component {
   render() {
     return (
       <div className='events-container'>
-        {this.renderEvents()}
+        {this.renderEvents(this.props.myEvents)}
         {this.addNew()}
       </div>
     )

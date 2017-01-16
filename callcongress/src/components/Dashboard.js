@@ -1,14 +1,23 @@
 import React from 'react';
 import Events from './Events';
+import axios from 'axios';
+import fbaseAXIOS from './keys/key';
 
 class Dashboard extends React.Component {
   constructor() {
     super();
     this.renderDash = this.renderDash.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.myEvents = 'Loading...';
   }
 
   componentDidMount() {
-    console.log(`i'm boutta do it`); /// i DON't want to make api calls here because i DON'T want to run into the state disaster that i ran into in fakeauth. okay. I'm going to have to draw this out.
+/*    if (th is.props.areaEvents.length > 0) {
+      axios.all(this.props.areaEvents.map((i) => {
+        fbaseAXIOS.get(`/events/${i}.json`)
+          .then((res) => console.log(res))
+      })).then((res) => console.log(res.data));
+    }*/
   }
 
   listTopics() {
@@ -49,6 +58,7 @@ class Dashboard extends React.Component {
               <Events
                 addNewEvent={this.props.addNewEvent}
                 uid={this.props.uid}
+                myEvents={this.myEvents}
               />
             </div>
           </div>
