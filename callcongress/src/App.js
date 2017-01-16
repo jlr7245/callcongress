@@ -49,39 +49,24 @@ class App extends Component {
     this.state = {
       pageType: 'initial',
       uid: null,
-      areaevents: []
+      allevents: []
     }
   }
 
   ///// ======== LIFECYCLE METHODS ======== /////
 
   componentDidMount() {
-    fbaseAXIOS.get(`/events/eventziparray.json`)
+    fbaseAXIOS.get(`/events.json`)
       .then((res) => {
-        console.log(res);
-        this.setState({zipsWithEvents: res.data});
-        console.log(res.data);
+        let theEvents = Object.keys(res.data).map((i) => {
+          res.data[i].key = i;
+          return res.data[i];
+        })
+        this.setState({allevents: theEvents})
       })
   }
 
   componentDidUpdate() {
-    if (this.state.justLoggedIn || this.state.newEvent) {
-      let zipKeysToBeRendered = this.state.zipsWithEvents.filter((i) => (this.state.userData.surrounding.indexOf(i[0]) !== -1)).map((i) => {return i[1]});
-      let myEventArray = [];
-        axios.all(zipKeysToBeRendered.map((i) => {
-          fbaseAXIOS.get(`/events/${i}.json`)
-            .then((res) => {
-              myEventArray.push(res.data);
-              console.log(myEventArray);
-            })
-        })).then((res) => {
-          console.log(res);
-          this.setState({
-            eventArray: myEventArray,
-            justLoggedIn: false,
-            newEvent: false}) /// i feel like I'm doing something wrong here.
-        });
-    }
     if (this.state.justUpdated) {
       fbaseAXIOS.put(`/users/${this.state.uid}.json`, this.state.userData)
       .then((res) => {
@@ -90,11 +75,8 @@ class App extends Component {
       .catch((err) => console.log(err));
     }
     if (this.state.newEvent) {
-      fbaseAXIOS.put(`/events/eventziparray.json`, this.state.zipsWithEvents)
-        .then((res) => {
-          this.setState({newEvent: false});
-          console.log(res);
-        });
+      fbaseAXIOS.get(`/events.json`)
+        .then((res) => console.log(res.data));
     }
   }
 
@@ -201,7 +183,7 @@ class App extends Component {
     fbaseAXIOS.post('/events.json', formInput)
       .then((res) => {
         console.log(res);
-        this.setState({zipsWithEvents: this.state.zipsWithEvents.push([newEventZip, res.data.name]), newEvent: true});
+        this.setState({newEvent: true});
       })
     e.target.reset();
   }
@@ -218,7 +200,7 @@ class App extends Component {
         editUser={this.editUser}
         addNewEvent={this.addNewEvent}
         uid={this.state.uid}
-        areaEvents={this.state.eventArray}
+        allevents={this.state.allevents}
         />
     }
   }

@@ -14,14 +14,11 @@ class Events extends React.Component {
     console.log('im here');
   }
 
-  renderEvents(myEvents) {
-    console.log(myEvents);
-    if (typeof myEvents === 'string') {
-      return <p>Loading...</p>
-    } else {
-      return <p>ready to load events</p>
-    }
-    /*for (let event of myEvents) {
+  renderEvents() {
+    console.log(this.props.allevents);
+    let allEvents = this.props.allevents;
+    let eventArray = [];
+    for (let event of allEvents) {
       console.log(event);
       let buttonOrNot;
       if (event.belongsTo === this.props.uid) {
@@ -29,7 +26,7 @@ class Events extends React.Component {
       } else {
         buttonOrNot = (<span>⁜</span>)
       }
-      return (
+      eventArray.push(
         <div className='individualevent'>
             <div className='eventrow'>
               <img src={`../public/media/${event.type}`}  alt={event.type} />
@@ -51,8 +48,9 @@ class Events extends React.Component {
               {buttonOrNot}
             </div>
           </div>
-        )
-    }*/
+        );
+    }
+    return eventArray.reverse();
   }
 
   addNew() {
@@ -92,7 +90,10 @@ class Events extends React.Component {
   render() {
     return (
       <div className='events-container'>
-        {this.renderEvents(this.props.myEvents)}
+        <h1>Your Events</h1>
+        <div className='established-events'>
+          {this.renderEvents()}
+        </div>
         {this.addNew()}
       </div>
     )

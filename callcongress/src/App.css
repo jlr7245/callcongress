@@ -298,6 +298,7 @@ body {
   display: flex;
   flex-grow:1;
   justify-content:center;
+  align-items:flex-start;
   background-color:white;
   box-sizing:border-box;
 }
@@ -318,8 +319,10 @@ body {
   flex-grow:1;
   background-color:white;
   min-height:100vh;
+  max-width:1200px;
+  margin-top:120px;
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   padding:50px;
   box-sizing: border-box;
 }
@@ -383,6 +386,7 @@ body {
 
 /* ==== NEW EVENT FORM === */
 .newevent {
+  background-color:white;
   display: flex;
   flex-direction: column;
   max-width: 800px;
@@ -476,6 +480,75 @@ select {
 
 .newevent button {
   flex-grow: 1;
+}
+
+  /* ==== events == */
+
+.individualevent {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventrow {
+  display: flex;
+}
+.descparams {
+  padding: 5px 20px;
+}
+.timeanddate {
+  background-color:black;
+  color:white;
+  padding: 0 10px;
+}
+.category {
+  background-color:red;
+  color:white;
+  padding: 0 10px;
+  margin-left: 10px;
+}
+.eventrow h1 {
+  line-height: 65px;
+  font-size: 2em;
+}
+.eventrow img {
+  padding: 0 20px 0 0;
+}
+.eventrow {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+.individualevent {
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-top: 1px solid #eee;
+  margin: 25px;
+}
+
+.wide {
+  justify-content: space-between;
+}
+
+.desc {
+  font-size: 1.3em;
+  margin: 15px;
+}
+.addr {
+  padding: 0 10px 0 15px;
+}
+
+.established-events {
+  max-height: 300px;
+  overflow-y: scroll;
+  font-size: 13px;
+  border:3px solid #eee;
+  background-color:white;
+}
+
+.events-container {
+  background-color: #f3f3f3;
+  padding:15px;
+  box-sizing: border-box;
 }
 
 

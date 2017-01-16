@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
               <Events
                 addNewEvent={this.props.addNewEvent}
                 uid={this.props.uid}
-                myEvents={this.myEvents}
+                allevents={this.props.allevents}
               />
             </div>
           </div>
