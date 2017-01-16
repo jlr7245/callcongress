@@ -40,7 +40,7 @@ class FakeAuth extends React.Component {
         .catch((err) => console.log(err));
     } else if (this.state.loginState === 'new-confirm') {
       (this.userArray !== undefined && this.userArray !== null) ? this.userArray.push(this.state.newuser) : this.userArray = [this.state.newuser];
-      fbaseAXIOS.patch('/users.json', {userarray: this.userArray})
+      fbaseAXIOS.put('/users/userarray.json', this.userArray)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       this.setState({loginState: 'logged-in'});

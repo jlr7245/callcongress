@@ -60,7 +60,7 @@ class App extends Component {
 
   componentDidUpdate() {
     if (this.state.justUpdated) {
-      fbaseAXIOS.patch(`/users.json`, {[this.state.uid]: this.state.userData})
+      fbaseAXIOS.put(`/users/${this.state.uid}.json`, this.state.userData)
       .then((res) => {
         console.log(res);
       })
@@ -190,6 +190,7 @@ class App extends Component {
         userDetailsSubmit={this.userDetailsSubmit}
         editUser={this.editUser}
         addNewEvent={this.addNewEvent}
+        uid={this.state.uid}
         />
     }
   }

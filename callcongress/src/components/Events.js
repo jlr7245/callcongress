@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class Events extends React.Component {
   constructor() {
@@ -13,8 +14,38 @@ class Events extends React.Component {
     console.log('im here');
   }
 
-  renderEvents() {
-    return (<p>Events go here...</p>);
+  renderEvents(eventArray) {
+    for (let event of eventArray) {
+      let buttonOrNot;
+      if (event.belongsTo === this.props.uid) {
+        buttonOrNot = (<button>Edit</button>)
+      } else {
+        buttonOrNot = (<span>⁜</span>)
+      }
+      return (
+        <div className='individualevent'>
+            <div className='eventrow'>
+              <img src={`../public/media/${event.type}`} />
+              <h1>{event.name}</h1>
+            </div>
+            <div className='eventrow'>
+              <div className='descparams'>
+                <span className='timeanddate'>{moment(event.date).format('dddd, MMM Do, h:mm a')}</span>
+                <span className='category'>{event.type}</span>
+              </div>
+            </div>
+            <div className='eventrow'>
+              <div className='desc'>
+                <p>{event.description}</p>
+              </div>
+            </div>
+            <div className='eventrow wide'>
+              <span className='addr'>{event.address}, {event.city}, {event.state} {event.zip}</span>
+              {buttonOrNot}
+            </div>
+          </div>
+        )
+    }
   }
 
   addNew() {
@@ -24,7 +55,7 @@ class Events extends React.Component {
           <div className='row'>
             <input type='text' required name='name' className='eventname' placeholder='Event Name' />
             <select name='type' required className='select'>
-              <option value='' disabled selected>Choose one</option>
+              <option disabled selected>Choose one</option>
               <option value='lecture'>Lecture or Class</option>
               <option value='townmtg'>Town Hall Meeting</option>
               <option value='partymtg'>Party Meeting</option>

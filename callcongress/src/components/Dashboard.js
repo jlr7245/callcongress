@@ -46,7 +46,10 @@ class Dashboard extends React.Component {
               </div>
             </div>
             <div className='events'>
-              <Events addNewEvent={this.props.addNewEvent} />
+              <Events
+                addNewEvent={this.props.addNewEvent}
+                uid={this.props.uid}
+              />
             </div>
           </div>
           <div className='right-dash'>
