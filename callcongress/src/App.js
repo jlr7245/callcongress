@@ -76,7 +76,13 @@ class App extends Component {
     }
     if (this.state.newEvent) {
       fbaseAXIOS.get(`/events.json`)
-        .then((res) => console.log(res.data));
+      .then((res) => {
+        let theEvents = Object.keys(res.data).map((i) => {
+          res.data[i].key = i;
+          return res.data[i];
+        })
+        this.setState({allevents: theEvents})
+      })
     }
   }
 
