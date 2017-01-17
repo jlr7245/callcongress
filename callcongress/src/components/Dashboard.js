@@ -67,6 +67,7 @@ class Dashboard extends React.Component {
                 uid={this.props.uid}
                 allevents={this.props.allevents}
                 editEvent={this.props.editEvent}
+                deleteEvent={this.props.deleteEvent}
                 eventEdited={this.props.eventEdited}
                 saveEventEdit={this.props.saveEventEdit}
               />

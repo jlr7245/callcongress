@@ -20,7 +20,7 @@ class Events extends React.Component {
     for (let event of allEvents) {
       let buttonOrNot;
       if (event.belongsTo === this.props.uid) {
-        buttonOrNot = (<button onClick={(e) => this.props.editEvent(e, event.key)}>Edit</button>)
+        buttonOrNot = (<div className='buttons'><button onClick={(e) => this.props.editEvent(e, event.key)}>Edit</button> <button onClick={(e) => this.props.deleteEvent(e, event.key)}>Delete</button></div>)
       } else {
         buttonOrNot = (<span className='notyours' title='You must own an event in order to edit it.'>⁜</span>)
       }

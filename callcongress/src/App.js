@@ -47,6 +47,7 @@ class App extends Component {
     this.addNewEvent = this.addNewEvent.bind(this);
     this.editEvent = this.editEvent.bind(this);
     this.saveEventEdit = this.saveEventEdit.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this);
 
     //* state *//
     this.state = {
@@ -246,6 +247,13 @@ class App extends Component {
     this.setState({eventEdited: key});
   }
 
+  deleteEvent(e, key) {
+    fbaseAXIOS.delete(`/events/${key}.json`)
+      .then((res) => {
+        this.setState({newEvent: true})
+      });
+  }
+
   ///// ======= SETTING UP WHICH PAGE ==== /////
   renderPage() {
     if (this.state.pageType === 'initial') {
@@ -260,6 +268,7 @@ class App extends Component {
         uid={this.state.uid}
         allevents={this.state.allevents}
         editEvent={this.editEvent}
+        deleteEvent={this.deleteEvent}
         eventEdited={this.state.eventEdited}
         saveEventEdit={this.saveEventEdit}
         />
