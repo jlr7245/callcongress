@@ -3,11 +3,6 @@ import React from 'react';
 import moment from 'moment';
 
 class Legislators extends React.Component {
-  constructor() {
-    super();
-
-  }
-
 /*  shouldComponentUpdate(nextProps) {
     if (this.props === nextProps) {
       return false;
@@ -18,6 +13,7 @@ class Legislators extends React.Component {
     let legislatorList = allLegislators.results
       .filter((i) => this.props.legislatorsToLoad.indexOf(i.bioguide_id) !== -1);
     let formattedLegs = legislatorList.map((leg) => {
+      ///legislator socials///
       let legSite;
       if (leg.hasOwnProperty('website') && leg.website !== null) {
         legSite = (<a href={leg.website} target='_blank'>
@@ -42,11 +38,11 @@ class Legislators extends React.Component {
                <i className={`fa fa-youtube fa-2x fa-fw ${leg.party}`}></i>
              </a>)
      } else legTube = '';
-
+     /// legislator list-item///
       return (
-        <li className={leg.party}>
+        <li className={leg.party} key={leg.bioguide_id}>
          <div className='leghead'>
-           <img src={`https://theunitedstates.io/images/congress/225x275/${leg.bioguide_id}.jpg`} />
+           <img src={`https://theunitedstates.io/images/congress/225x275/${leg.bioguide_id}.jpg`} alt={`${leg.first_name} ${leg.last_name}`}/>
            <div className='headinfo'>
              <i className={`fa fa-circle-o fa-2x ${leg.party}`}></i>
              <h3>{leg.first_name} {leg.last_name}</h3>

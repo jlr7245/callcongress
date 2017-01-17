@@ -17,22 +17,18 @@ class Initial extends React.Component {
     return !(this.props === nextProps); /// doesnt have the desired effect :(
   }
 
-  componentDidUpdate() {
-    console.log('update');
-  }
 
   render() {
     return (
-      <div className="init">
-        <div className="left">
+      <div className='init'>
+        <div className='left'>
           <h1>{this.inspirationalQuotes[Math.floor(Math.random() * this.inspirationalQuotes.length)]}</h1>
         </div>
-        <div className="right">
-          <div className="input">
-            <input type="number" onKeyPress={(e) => this.props.getInput(e.target.value)} />
-            <p className="ziplabel rd">Please enter your zip code to get started.</p>
-            {(this.props.errorMsg) ? <p>Please enter a valid zip.</p> : ''}
-          </div>
+        <div className='right'>
+          <form className='initialinput' onSubmit={(e) => this.props.getInput(e)}>
+            <input name='zip' type='number' required /> <button type='submit'><i className='fa fa-search fa-4x wht'></i></button>
+            <p className='ziplabel rd'>Please enter your zip code to get started.</p>
+          </form>
         </div>
       </div>
     )
@@ -41,5 +37,3 @@ class Initial extends React.Component {
 
 export default Initial;
 
-
-/// change that input to a form

@@ -192,6 +192,7 @@ body {
   align-items: center;
 }
 
+
 .loginform input,
 .signup input,
 .intakeform input {
@@ -699,17 +700,27 @@ select {
   text-align: right;
 }
 
-.right .input input {
+.right .initialinput input {
   color: white;
   font-size: 2em;
-  display: block;
+  display: inline-block;
   padding: 15px;
   border-bottom: 3px solid white;
   width: 25vw;
   text-align: center;
 }
 
-.right .input .ziplabel {
+.initialinput button i:before {
+  cursor: pointer;
+  transition: 0.2s all;
+}
+
+.initialinput button:hover i:before {
+  color: #0BBCD6;
+  transition: 0.2s all;
+}
+
+.right .initialinput .ziplabel {
   font-size: 0.8em;
   margin: 15px;
 }

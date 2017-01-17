@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 /// ==== LIBRARIES === ///
-import axios from 'axios';
+//import axios from 'axios';
 //import moment from 'moment';
 /// === COMPONENTS === ///
 import Initial from './components/Initial';
@@ -25,10 +25,7 @@ class App extends Component {
     //* binds *//
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    //===initial auth attempt===//
-    //this.renderLogin = this.renderLogin.bind(this);
-    //this.authenticate = this.authenticate.bind(this);
-    //this.testPost = this.testPost.bind(this);
+
 
     //==fake auth==//
     this.setUser = this.setUser.bind(this);
@@ -126,7 +123,8 @@ class App extends Component {
 
   //// ===== INITIAL TO LOCATION SWITCH ==== ////
   getInput(e) {
-    console.log(e);
+    e.preventDefault();
+    console.log(e.target.zip.value);
   }
 
   //// ==== DASHBOARD METHODS ===== /////
@@ -134,9 +132,7 @@ class App extends Component {
     return zipAXIOS.get(`radius.json/${i}/30/mile?minimal`);
   }
 
-/*  getLocationSenators(i) {
-    return sunlightAXIOS.get(`legislators/locate?zip=${i}`);
-  }*/
+
 
   getLocationSenators(i, user) {
     sunlightAXIOS.get(`legislators/locate?zip=${i}`)
@@ -153,25 +149,6 @@ class App extends Component {
       });
     }
 
-/*  getBoth(i,user) {
-    axios.all([this.getSurroundingZips(i), this.getLocationSenators(i)])
-      .then(axios.spread((zips, sens) => {
-        console.log(zips.data.zip_codes);
-        let senIdArray = sens.data.results.map((res) => {
-          return res.bioguide_id
-        });
-        user.watching = senIdArray;
-        user.surrounding = zips.data.zip_codes;
-        this.setState({
-          userData: user,
-          justUpdated: true,
-        })
-      }));
-  }*/
-
-/*  getBoth(i, user) {
-    this.getLocationSenators(i)
-  }*/
 
   userDetailsSubmit(e) {
     e.preventDefault();
@@ -184,7 +161,7 @@ class App extends Component {
     currentUser.zip = userZip;
     currentUser.topics = topicsArray;
     currentUser.status = 'established';
-    this.getLocationSenators(userZip, currentUser)
+    this.getLocationSenators(userZip, currentUser);
     /// doing stuff with our object
   }
 
@@ -298,53 +275,3 @@ class App extends Component {
 export default App;
 
 
-
-  //// ======= AUTHENTICATION HELL ======== ///////
-
-  /*authenticate() {
-    var provider = new firebase.auth.GithubAuthProvider();
-    console.log(provider);
-    firebase.auth().signInWithPopup(provider)
-      .then((res) => {
-        console.log(res);
-        if (res.credential) {
-          var tokenFirst = res.credential.accessToken;
-          console.log(tokenFirst);
-          firebase.auth().currentUser.getToken(true).then((token) => {
-           const user = axios.create({
-              baseURL: `${fbaseUrl}`,
-              headers: {Authorization: token}
-            });
-            this.setState({uid: res.user.uid, useraxios: user, token: token});
-          });
-
-      } else {console.log('no auth!')}
-      }).catch((err) => {
-        console.log(err.message);
-      });
-  }
-
-  testPost() {
-    let id = this.state.uid;
-    console.log(this.state);
-    this.state.useraxios.post(`/users/${id}/post.json`, { id: this.state.uid, joinedOn: moment() })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
-  }
-
-/*  createUser(id) {
-    axios.post(`${fbaseURL}/users/${id}.json?apiKey=${}`)
-  }
-
-  renderLogin () {
-    if (this.state.uid === null) {
-      return (
-        <nav className="login">
-          <button className="github" onClick={() => this.authenticate()}>Log In with Github</button>
-        </nav>
-        )
-    } else {
-      console.log(this.state.uid);
-      return (<p>You are logged in!</p>)
-    }
-  }*/
