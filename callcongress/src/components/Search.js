@@ -43,8 +43,10 @@ class Search extends React.Component {
             placeholder='Type here'
             onChange={(e) => this.handleChange(e)} />
         </div>
-        <div className='shortlegscontainer'>
-          {this.filterLegs()}
+        <div className='shortlegs'>
+          <ul>
+            {this.filterLegs()}
+          </ul>
         </div>
       </div>
       )

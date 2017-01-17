@@ -12,6 +12,7 @@ class FakeAuth extends React.Component {
     this.tryingToLogIn = this.tryingToLogIn.bind(this);
     this.newUser = this.newUser.bind(this);
     this.createFakeAuthUser = this.createFakeAuthUser.bind(this);
+    this.closePanel = this.closePanel.bind(this);
     //state
     this.state = {
       loginState: 'logged-out',
@@ -61,10 +62,15 @@ class FakeAuth extends React.Component {
     this.setState({loginState: 'new'});
   }
 
+  closePanel() {
+    this.setState({loginState: 'logged-out'})
+  }
+
 ///=== dealing with form submission
   getUser(e) {
     console.log(e);
   }
+
 
   usersMap(usersArray, loggingIn) {
     for (let i = 0; i < usersArray.length; i++) {
@@ -133,6 +139,9 @@ class FakeAuth extends React.Component {
             <button type='submit'>Log in!</button>
           </form>
           <p className='request-key'>Don't have a key? <span className='requestlink' onClick={() => this.newUser()}>Request one!</span></p>
+          <button className='close' onClick={() => this.closePanel()}>
+            <i className='fa fa-times fa-1x ltg'></i>
+          </button>
         </div>
       );
     } else if (this.state.loginState === 'new') {
@@ -148,6 +157,9 @@ class FakeAuth extends React.Component {
             <button type='submit' name='signup-button'>Sign up!</button>
           </form>
           <h6 className='rd'>This is not a secure site. DO NOT submit any sensitive information.</h6>
+          <button className='close' onClick={() => this.closePanel()}>
+            <i className='fa fa-times fa-1x ltg'></i>
+          </button>
         </div>
       )
     } else if (this.state.loginState === 'logged-in') {
@@ -163,6 +175,9 @@ class FakeAuth extends React.Component {
           <h3 className='rd'>Oh no!</h3>
           <p>We couldn't find you.</p>
           <button onClick={() => this.tryingToLogIn()}>Click here to try again.</button>
+          <button className='close' onClick={() => this.closePanel()}>
+            <i className='fa fa-times fa-1x ltg'></i>
+          </button>
         </div>
         )
     }

@@ -110,7 +110,7 @@ body {
 .bl, .D:before {color: #0BBCD6;}
   .blbg, .info.D {background-color: #0BBCD6}
 .rd, .R:before {color: #E6625E;}
-  .rdbg, .info.R {color: #E6625E;}
+  .rdbg, .info.R {background-color: #E6625E;}
 .wht {color: white;}
   .whtbg {background-color: white;}
 .ltg {color: #ddd;}
@@ -295,6 +295,17 @@ body {
   line-height: 2em;
 }
 
+    /* fakeauth close button */
+button.close {
+  border: 0px;
+  transition: 0.2s all;
+}
+
+button.close:hover {
+  background-color: #fafafa;
+  transition: 0.2s all;
+}
+
 
 /* ====== DASHBOARD ====== */
 
@@ -362,7 +373,7 @@ body {
   padding: 2px;
 }
 
-.info {
+.dash .info {
   margin-bottom: 50px;
 }
 
@@ -753,6 +764,7 @@ select {
   width: 100vw;
   flex-direction: row;
   justify-content:center;
+  margin-top: 100px;
 }
 .zipholder {
   display:flex;
@@ -783,6 +795,7 @@ select {
 .resultspage .leglist ul li img {
   height: 122px;
   width: 100px;
+  min-width: 100px;
 }
 
 .resultspage .leglist ul {
@@ -792,6 +805,72 @@ select {
 .search {
   color: white;
 }
+
+/*==== short legislators ===*/
+.shortlegs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  max-width:1100px;
+  margin-bottom: 100px;
+  max-height: 800px;
+  overflow-y:scroll;
+}
+.shortlegs ul {
+  display: flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+}
+.shortlegs li {
+  width: 260px;
+  display: flex;
+  flex-direction:column;
+  box-sizing:border-box;
+  padding: 15px;
+  border: 1px solid #eee;
+  margin: 5px;
+}
+.shortlegs .shorthead h3 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.shortlegs .shorthead h3 i {
+  margin-right: 10px;
+}
+
+.shortlegs .shorthead .info { /* decided by party*/
+  color: white;
+  padding: 2px 5px;
+  text-transform:uppercase;
+  font-size:0.8em;
+}
+
+.shrtphn {
+  display:flex;
+  align-items:center;
+}
+.contact {
+  margin-top: 10px;;
+}
+.shrtphn span {
+  font-size: 1.5em;
+  padding-left: 10px;
+}
+
+.searchbar input {
+  border-bottom: 3px solid white;
+  padding: 10px;
+  margin: 10px;
+  width: 30vw;
+  font-size: 1.8em;
+  text-align:center;
+}
+.searchbar {
+  text-align:center;
+  margin: 50px 0 20px;
+}
+
 
 /* === media queries (HA!) == */
 
