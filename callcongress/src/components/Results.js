@@ -16,6 +16,9 @@ class Results extends React.Component {
           />
         </div>
       </div>
+      <div className='search'>
+        <p>Search component goes here</p>
+      </div>
     </div>
     )
   }

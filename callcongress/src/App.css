@@ -108,9 +108,9 @@ body {
 
 /* colors */
 .bl, .D:before {color: #0BBCD6;}
-  .blbg {background-color: #0BBCD6}
+  .blbg, .info.D {background-color: #0BBCD6}
 .rd, .R:before {color: #E6625E;}
-  .rdbg {color: #E6625E;}
+  .rdbg, .info.R {color: #E6625E;}
 .wht {color: white;}
   .whtbg {background-color: white;}
 .ltg {color: #ddd;}
@@ -620,7 +620,7 @@ select {
   height: 183px;
 }
 .leglist .headinfo {
-  padding: 15px;
+  padding: 1em;
   display: flex;
   flex-direction: column;
 }
@@ -634,7 +634,7 @@ select {
 .leglist .represents {
   color: white;
   background-color: black;
-  padding: 0 10px;
+  padding: 0 0.8em;
 }
 
 .currentterm {
@@ -643,7 +643,7 @@ select {
 }
 
 .legbody {
-  padding: 20px;
+  padding: 1.2em;
   display:flex;
   flex-direction:column;
 }
@@ -653,17 +653,30 @@ select {
   align-items:center;
 }
 .legphn h3 {
-  padding-left: 15px; font-size: 1.5em;
+  padding-left: 0.8em; font-size: 1.5em;
 }
 .legadd p {
-  padding-left:15px;
+  padding-left:0.8em;
 }
 .legsoc {
   display:flex;
   justify-content:space-between;
 }
 .legbody > * {
-  padding: 15px 0;
+  padding: 0.8em 0;
+}
+
+.chamber {
+  display: flex;
+  align-items: center;
+  text-transform:capitalize;
+  font-family: 'warnock pro';
+  font-style: oblique;
+  margin-bottom:0.2em;
+}
+
+.chamber * {
+  padding-right: 0.3em;
 }
 
 
@@ -677,6 +690,7 @@ select {
 
 .pagecontainer {
   max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .left {
@@ -724,6 +738,62 @@ select {
   font-size: 0.8em;
   margin: 15px;
 }
+
+/* == results page */
+
+.resultspage {
+  display: flex;
+  align-items: space-around;
+  flex-direction: column;
+  align-items:center;
+}
+
+.location {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  justify-content:center;
+}
+.zipholder {
+  display:flex;
+  align-items:center;
+}
+.reszip {
+  color:white;
+  display:block;
+  padding: 0 50px;
+  font-size:5em;
+}
+
+.resultspage .location .legislators {
+
+}
+
+.resultspage .location .legislators .leglist {
+  max-width: 900px;
+  background:none;
+  border:1px solid #555;
+}
+
+.resultspage .leglist ul li {
+  font-size: 12px;
+  width: 280px;
+}
+
+.resultspage .leglist ul li img {
+  height: 122px;
+  width: 100px;
+}
+
+.resultspage .leglist ul {
+  height: 400px;
+}
+
+.search {
+  color: white;
+}
+
+/* === media queries (HA!) == */
 
 @media screen and (min-width: 1000px) {
   .container {

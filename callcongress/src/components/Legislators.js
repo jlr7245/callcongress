@@ -44,7 +44,7 @@ class Legislators extends React.Component {
          <div className='leghead'>
            <img src={`https://theunitedstates.io/images/congress/225x275/${leg.bioguide_id}.jpg`} alt={`${leg.first_name} ${leg.last_name}`}/>
            <div className='headinfo'>
-             <i className={`fa fa-circle-o fa-2x ${leg.party}`}></i>
+             <span className='chamber'><i className={`fa fa-circle-o fa-2x ${leg.party}`}></i> {leg.chamber}</span>
              <h3>{leg.first_name} {leg.last_name}</h3>
              <span className='represents'>{leg.state_name}</span>
              <p className='currentterm'>Started {moment(leg.term_start).format('MMM d, YYYY')}</p>
