@@ -8,18 +8,10 @@ class Dashboard extends React.Component {
   constructor() {
     super();
     this.renderDash = this.renderDash.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
+
     this.myEvents = 'Loading...';
   }
 
-  componentDidMount() {
-/*    if (th is.props.areaEvents.length > 0) {
-      axios.all(this.props.areaEvents.map((i) => {
-        fbaseAXIOS.get(`/events/${i}.json`)
-          .then((res) => console.log(res))
-      })).then((res) => console.log(res.data));
-    }*/ /// this put us into an infinite loop. very fun
-  }
 
   listTopics() {
     let topicsArray = []
@@ -88,7 +80,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    //let user = this.props.user;
     return (
       <div className='dash'>
         {this.renderDash()}

@@ -18,12 +18,9 @@ class FakeAuth extends React.Component {
       loginState: 'logged-out',
       currentUser: null
     }
-/*    this.state = {
-      loginState: 'logged-in',
-      currentUser: '-KaYnwgAuJlqhwMF1djY'
-    }*/
+
     //other
-    this.userArray = []; // if this is in state we run into a componentDidUpdate loop
+    this.userArray = [];
   }
 
 ///=== lifecycle methods
@@ -35,9 +32,7 @@ class FakeAuth extends React.Component {
     if (this.state.loginState === 'attempting') {
       fbaseAXIOS.get('/users/userarray.json')
         .then((res) => {
-          console.log(res);
           this.userArray = res.data;
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     } else if (this.state.loginState === 'new-confirm') {
@@ -67,10 +62,6 @@ class FakeAuth extends React.Component {
   }
 
 ///=== dealing with form submission
-  getUser(e) {
-    console.log(e);
-  }
-
 
   usersMap(usersArray, loggingIn) {
     for (let i = 0; i < usersArray.length; i++) {

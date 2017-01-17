@@ -3,11 +3,6 @@ import React from 'react';
 import moment from 'moment';
 
 class Legislators extends React.Component {
-/*  shouldComponentUpdate(nextProps) {
-    if (this.props === nextProps) {
-      return false;
-    }
-  }*/ // this would have the desired behavior of not rerendering the legislators but looking at the docs it looks like it doesn't make a difference
 
   renderLegislators() {
     let legislatorList = allLegislators.results
@@ -84,19 +79,3 @@ class Legislators extends React.Component {
 
 export default Legislators;
 
-
-/*
-<div className='legsoc'>
-             {if (leg.hasOwnProperty('website') && leg.website !== null) return (<a href={leg.website} target='_blank'>
-               <i className='fa fa-link fa-2x fa-fw'></i>
-             </a>)}
-            {if (leg.hasOwnProperty('twitter_id') && leg.twitter_id !== null) return (<a href={`https://www.twitter.com/${leg.twitter_id}`} target='_blank'>
-               <i className='fa fa-2x fa-fw fa-twitter'></i>
-             </a>) }
-             {if (leg.hasOwnProperty('facebook_id') && leg.facebook_id !== null) return (<a href={`https://www.facebook.com/${leg.facebook_id}`} target='_blank'>
-               <i className='fa fa-2x fa-fw fa-facebook'></i>
-             </a>)}
-             {if (leg.hasOwnProperty('youtube_id') && leg.youtube_id !== null) return(<a href='https://www.youtube.com/user/ZeldinForCongress' target='_blank'>
-               <i className='fa fa-2x fa-fw fa-youtube'></i>
-             </a>)}
-*/ /// all of these need to be put in variables unfortunately

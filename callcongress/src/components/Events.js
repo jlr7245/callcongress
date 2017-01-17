@@ -10,9 +10,7 @@ class Events extends React.Component {
     ///////// absolutely NO state in this component it is NOT ALLOWED
   }
 
-  componentDidMount() {
-    console.log('im here');
-  }
+
 
   renderEvents() {
     let allEvents = this.props.allevents;

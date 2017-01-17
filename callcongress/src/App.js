@@ -92,13 +92,9 @@ class App extends Component {
 
 
 
-
-
-
   //// ==== NOT REAL AUTHENTICATION BUT HEY ==== ///
 
-  /// method to set the state to the current UID
-  /// method to go to dashboard
+
 
   setUser(uid) {
     fbaseAXIOS.get(`/users/${uid}.json`)
@@ -140,9 +136,9 @@ class App extends Component {
     }
 
   //// ==== DASHBOARD METHODS ===== /////
-  getSurroundingZips(i) {
+/*  getSurroundingZips(i) {
     return zipAXIOS.get(`radius.json/${i}/30/mile?minimal`);
-  }
+  }*/
 
   getLocationSenators(i, user) {
     sunlightAXIOS.get(`legislators/locate?zip=${i}`)
@@ -199,7 +195,6 @@ class App extends Component {
     };
     fbaseAXIOS.post('/events.json', formInput)
       .then((res) => {
-        console.log(res);
         this.setState({newEvent: true});
       })
     e.target.reset();
@@ -222,7 +217,6 @@ class App extends Component {
     };
     fbaseAXIOS.put(`/events/${key}.json`, formInput)
       .then((res) => {
-        console.log(res);
         this.setState({newEvent: true,
           eventEdited: null});
       })

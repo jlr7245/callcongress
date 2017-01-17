@@ -55,17 +55,3 @@ class Search extends React.Component {
 
 export default Search;
 
-/*
- let shortLegsToRender = legislatorList
-        .filter((leg) => (leg.first_name.includes(this.state.searched))
-          || (leg.last_name.includes(this.state.searched))
-          || (leg.state_name.includes(this.state.searched))
-          || (leg.leadership_role.includes(this.state.searched)));
-          */
-
-/*
-(leg.first_name.indexOf(this.state.searched) !== -1)
-          || (leg.last_name.indexOf(this.state.searched) !== -1)
-          || (leg.state_name.indexOf(this.state.searched) !== -1)
-          || (leg.leadership_role !== null && leg.leadership_role.indexOf(this.state.searched) !== -1)
-*/

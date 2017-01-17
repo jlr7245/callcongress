@@ -14,7 +14,7 @@ class Initial extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !(this.props === nextProps); /// doesnt have the desired effect :(
+    return !(this.props === nextProps);
   }
 
 
