@@ -107,14 +107,17 @@ body {
 }
 
 /* colors */
-.bl {color: #0BBCD6;}
+.bl, .D:before {color: #0BBCD6;}
   .blbg {background-color: #0BBCD6}
-.rd {color: #E6625E;}
+.rd, .R:before {color: #E6625E;}
   .rdbg {color: #E6625E;}
 .wht {color: white;}
   .whtbg {background-color: white;}
 .ltg {color: #ddd;}
   .ltgbg {background-color: #ddd;}
+
+.D {border-color: #0BBCD6 !important;}
+.R {border-color: #E6625E !important;}
 
 /* Login */
 
@@ -569,6 +572,96 @@ select {
   font-size: 1.5em;
   cursor:pointer;
   color: #E6625E;
+}
+
+/* ============= legislators ========== */
+.leglist {
+  overflow-y: hidden;
+  overflow-x: scroll;
+  display: flex;
+  max-width:800px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color:#f2f2f2;
+  margin-bottom: 50px;
+  border: 3px solid #eee;
+}
+
+.leglist ul {
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+}
+
+.leglist ul li {
+  display: flex;
+  width: 380px;
+  padding: 15px;
+  box-sizing: border-box;
+  float: left;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #eee;
+  margin: 20px 10px;
+  transition: all 0.25s ease;
+  background-color: white;
+}
+
+.leglist ul li .leghead {
+  display: flex;
+}
+
+.leglist img {
+  width: 150px;
+  height: 183px;
+}
+.leglist .headinfo {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.leglist .headinfo h3 {
+  font-size: 22px;
+  font-style: oblique;
+  margin: 5px 0
+}
+
+.leglist .represents {
+  color: white;
+  background-color: black;
+  padding: 0 10px;
+}
+
+.currentterm {
+  margin: 5px 0;
+  font-size: 0.8em;
+}
+
+.legbody {
+  padding: 20px;
+  display:flex;
+  flex-direction:column;
+}
+.legadd, .legphn, .legsoc {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+}
+.legphn h3 {
+  padding-left: 15px; font-size: 1.5em;
+}
+.legadd p {
+  padding-left:15px;
+}
+.legsoc {
+  display:flex;
+  justify-content:space-between;
+}
+.legbody > * {
+  padding: 15px 0;
 }
 
 
