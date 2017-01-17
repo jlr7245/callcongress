@@ -1,5 +1,6 @@
 import React from 'react';
 import Legislators from './Legislators';
+import Search from './Search';
 
 class Results extends React.Component {
 
@@ -16,12 +17,13 @@ class Results extends React.Component {
           />
         </div>
       </div>
-      <div className='search'>
-        <p>Search component goes here</p>
-      </div>
+      <Search />
     </div>
     )
   }
 }
 
 export default Results;
+
+
+// Search maybe should take a method 'addToWatch' that is passed down to AbbreviatedLegislator and adds that legislator's bioguide_id to the user's watchlist... patches it back up to firebase... yikes. it's fine it's cool it's fine
