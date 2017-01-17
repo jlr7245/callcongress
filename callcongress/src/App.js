@@ -40,16 +40,20 @@ class App extends Component {
     //== dash binds ==//
     this.userDetailsSubmit = this.userDetailsSubmit.bind(this);
     this.editUser = this.editUser.bind(this);
-    this.getBoth = this.getBoth.bind(this);
+//    this.getBoth = this.getBoth.bind(this);
+    this.getLocationSenators = this.getLocationSenators.bind(this);
 
     //== event binds ==//
     this.addNewEvent = this.addNewEvent.bind(this);
+    this.editEvent = this.editEvent.bind(this);
+    this.saveEventEdit = this.saveEventEdit.bind(this);
 
     //* state *//
     this.state = {
       pageType: 'initial',
       uid: null,
-      allevents: []
+      allevents: [],
+      eventEdited: null
     }
   }
 
@@ -81,7 +85,8 @@ class App extends Component {
           res.data[i].key = i;
           return res.data[i];
         })
-        this.setState({allevents: theEvents})
+        this.setState({allevents: theEvents,
+          newEvent: false})
       })
     }
   }
@@ -128,11 +133,26 @@ class App extends Component {
     return zipAXIOS.get(`radius.json/${i}/30/mile?minimal`);
   }
 
-  getLocationSenators(i) {
+/*  getLocationSenators(i) {
     return sunlightAXIOS.get(`legislators/locate?zip=${i}`);
-  }
+  }*/
 
-  getBoth(i,user) {
+  getLocationSenators(i, user) {
+    sunlightAXIOS.get(`legislators/locate?zip=${i}`)
+      .then((res) => {
+        let senIdArray = res.data.results.map((res) => {
+          return res.bioguide_id;
+        });
+        user.watching = senIdArray;
+        //user.surrounding = zips.data.zip_codes;
+        this.setState({
+          userData: user,
+          justUpdated: true,
+        })
+      });
+    }
+
+/*  getBoth(i,user) {
     axios.all([this.getSurroundingZips(i), this.getLocationSenators(i)])
       .then(axios.spread((zips, sens) => {
         console.log(zips.data.zip_codes);
@@ -146,7 +166,11 @@ class App extends Component {
           justUpdated: true,
         })
       }));
-  }
+  }*/
+
+/*  getBoth(i, user) {
+    this.getLocationSenators(i)
+  }*/
 
   userDetailsSubmit(e) {
     e.preventDefault();
@@ -159,7 +183,7 @@ class App extends Component {
     currentUser.zip = userZip;
     currentUser.topics = topicsArray;
     currentUser.status = 'established';
-    this.getBoth(userZip, currentUser)
+    this.getLocationSenators(userZip, currentUser)
     /// doing stuff with our object
   }
 
@@ -174,7 +198,6 @@ class App extends Component {
     e.preventDefault();
     let data = e.target;
     let date = data.date.value+'T'+data.time.value+':00.000';
-    let newEventZip = data.zip.value;
     let formInput = {
       name: data.name.value,
       type: data.type.value,
@@ -194,6 +217,35 @@ class App extends Component {
     e.target.reset();
   }
 
+  saveEventEdit(e, key) {
+     e.preventDefault();
+    let data = e.target;
+    let date = data.date.value+'T'+data.time.value+':00.000';
+    let formInput = {
+      name: data.name.value,
+      type: data.type.value,
+      date: date,
+      description: data.description.value,
+      address: data.addr.value,
+      city: data.city.value,
+      state: data.state.value,
+      zip: data.zip.value,
+      belongsTo: this.state.uid
+    };
+    fbaseAXIOS.put(`/events/${key}.json`, formInput)
+      .then((res) => {
+        console.log(res);
+        this.setState({newEvent: true,
+          eventEdited: null});
+      })
+    e.target.reset();
+  }
+
+  editEvent(e, key) {
+    console.log(e, key);
+    this.setState({eventEdited: key});
+  }
+
   ///// ======= SETTING UP WHICH PAGE ==== /////
   renderPage() {
     if (this.state.pageType === 'initial') {
@@ -207,6 +259,9 @@ class App extends Component {
         addNewEvent={this.addNewEvent}
         uid={this.state.uid}
         allevents={this.state.allevents}
+        editEvent={this.editEvent}
+        eventEdited={this.state.eventEdited}
+        saveEventEdit={this.saveEventEdit}
         />
     }
   }

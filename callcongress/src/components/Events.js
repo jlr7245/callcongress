@@ -15,40 +15,72 @@ class Events extends React.Component {
   }
 
   renderEvents() {
-    console.log(this.props.allevents);
     let allEvents = this.props.allevents;
     let eventArray = [];
     for (let event of allEvents) {
-      console.log(event);
       let buttonOrNot;
       if (event.belongsTo === this.props.uid) {
-        buttonOrNot = (<button>Edit</button>)
+        buttonOrNot = (<button onClick={(e) => this.props.editEvent(e, event.key)}>Edit</button>)
       } else {
-        buttonOrNot = (<span>⁜</span>)
+        buttonOrNot = (<span className='notyours' title='You must own an event in order to edit it.'>⁜</span>)
       }
-      eventArray.push(
-        <div className='individualevent'>
-            <div className='eventrow'>
-              <img src={`../public/media/${event.type}`}  alt={event.type} />
-              <h1>{event.name}</h1>
-            </div>
-            <div className='eventrow'>
-              <div className='descparams'>
-                <span className='timeanddate'>{moment(event.date).format('dddd, MMM Do, h:mm a')}</span>
-                <span className='category'>{event.type}</span>
+      if (this.props.eventEdited !== event.key) {
+        eventArray.push(
+          <div className='individualevent' key={event.key}>
+              <div className='eventrow'>
+                <img src={`./media/${event.type}.jpg`}  alt={event.type} />
+                <h1>{event.name}</h1>
+              </div>
+              <div className='eventrow'>
+                <div className='descparams'>
+                  <span className='timeanddate'>{moment(event.date).format('dddd, MMM Do, h:mm a')}</span>
+                  <span className='category blbg'>{event.type}</span>
+                </div>
+              </div>
+              <div className='eventrow'>
+                <div className='desc'>
+                  <p>{event.description}</p>
+                </div>
+              </div>
+              <div className='eventrow wide'>
+                <span className='addr'>{event.address}, {event.city}, {event.state} {event.zip}</span>
+                {buttonOrNot}
               </div>
             </div>
-            <div className='eventrow'>
-              <div className='desc'>
-                <p>{event.description}</p>
+          );
+      } else if (this.props.eventEdited === event.key) {
+        eventArray.push(
+          <div key={event.key}>
+            <form id='event' className='newevent' onSubmit={(e) => this.props.saveEventEdit(e, event.key)}>
+              <div className='row'>
+                <input type='text' required name='name' className='eventname' defaultValue={event.name} />
+                <select name='type' defaultValue={event.type} required className='select'>
+                  <option disabled selected>Choose one</option>
+                  <option value='lecture'>Lecture or Class</option>
+                  <option value='townmtg'>Town Hall Meeting</option>
+                  <option value='partymtg'>Party Meeting</option>
+                  <option value='rally'>Rally</option>
+                  <option value='protest'>Protest</option>
+                  <option value='other'>Other</option>
+                </select>
+                <input type='date' defaultValue={moment(event.date).format('YYYY-MM-DD')} required name='date' className='date'/>
+                <input type='time' defaultValue={moment(event.date).format('HH:mm')} required name='time' className='time'/>
               </div>
-            </div>
-            <div className='eventrow wide'>
-              <span className='addr'>{event.address}, {event.city}, {event.state} {event.zip}</span>
-              {buttonOrNot}
-            </div>
+              <div className='row'>
+                <textarea name='description' defaultValue={event.description} required >
+                </textarea>
+              </div>
+              <div className='row'>
+                <input type='text' required name='addr' defaultValue={event.address} className='addr' />
+                <input type='text' defaultValue={event.city} required name='city' className='city'  />
+                <input type='text' required name='state' className='state' defaultValue={event.state} />
+                <input type='number' required name='zip' className='zip' placeholder={event.zip} />
+                <button type='submit'>Save</button>
+              </div>
+            </form>
           </div>
         );
+      }
     }
     return eventArray.reverse();
   }
@@ -60,7 +92,7 @@ class Events extends React.Component {
           <div className='row'>
             <input type='text' required name='name' className='eventname' placeholder='Event Name' />
             <select name='type' required className='select'>
-              <option disabled selected>Choose one</option>
+              <option disabled>Choose one</option>
               <option value='lecture'>Lecture or Class</option>
               <option value='townmtg'>Town Hall Meeting</option>
               <option value='partymtg'>Party Meeting</option>

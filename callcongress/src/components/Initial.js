@@ -22,3 +22,6 @@ class Initial extends React.Component {
 }
 
 export default Initial;
+
+
+/// change that input to a form

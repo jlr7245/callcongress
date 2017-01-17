@@ -1,7 +1,8 @@
 import React from 'react';
 import Events from './Events';
-import axios from 'axios';
-import fbaseAXIOS from './keys/key';
+import Legislators from './Legislators';
+//import axios from 'axios';
+//import fbaseAXIOS from './keys/key';
 
 class Dashboard extends React.Component {
   constructor() {
@@ -17,7 +18,7 @@ class Dashboard extends React.Component {
         fbaseAXIOS.get(`/events/${i}.json`)
           .then((res) => console.log(res))
       })).then((res) => console.log(res.data));
-    }*/
+    }*/ /// this put us into an infinite loop. very fun
   }
 
   listTopics() {
@@ -30,6 +31,7 @@ class Dashboard extends React.Component {
 
   renderDash() {
     let user = this.props.user;
+    console.log(user);
     if (user.status === 'new' || user.status === 'editing') {
       return (
         <div className='intakeform'>
@@ -54,11 +56,19 @@ class Dashboard extends React.Component {
                 <span className='infodata'> Your zip code is set to {user.zip}.</span>
               </div>
             </div>
+            <div className='legislators'>
+              <Legislators
+                legislatorsToLoad={user.watching}
+               />
+            </div>
             <div className='events'>
               <Events
                 addNewEvent={this.props.addNewEvent}
                 uid={this.props.uid}
                 allevents={this.props.allevents}
+                editEvent={this.props.editEvent}
+                eventEdited={this.props.eventEdited}
+                saveEventEdit={this.props.saveEventEdit}
               />
             </div>
           </div>
