@@ -105,6 +105,11 @@ body {
   background-color: white;
   display:flex;
 }
+@media screen and (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+  }
+}
 
 /* colors */
 .bl, .D:before {color: #0BBCD6;}
@@ -155,10 +160,29 @@ body {
   display: flex;
 }
 
+
 .auth {
   display: flex;
   align-items: stretch;
   flex-direction:column;
+}
+@media screen and (max-width: 1000px) and (min-width: 700px) {
+  .loginform form {
+    flex-direction: row;
+    display:flex;
+    justify-content:space-around;
+    width: 60vw;
+    margin-bottom: 15px;
+  }
+  .loginform form input {
+    width: 20vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .auth {
+    flex-grow:1;
+    flex-direction: row;
+  }
 }
 
 .attempting,
@@ -319,6 +343,7 @@ button.close:hover {
   box-sizing:border-box;
 }
 
+
 .intakeform {
   padding:100px;
   box-sizing:border-box;
@@ -342,6 +367,11 @@ button.close:hover {
   padding:50px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 1200px) {
+  .dashboard {
+    flex-direction: column;
+  }
+}
 
 .left-dash {
   flex-grow: 3;
@@ -363,6 +393,11 @@ button.close:hover {
 
 .nameandinfo h1 {
   font-size: 5em;
+}
+@media screen and (max-width: 1000px) {
+  .nameandinfo h1 {
+    font-size: 3em;
+  }
 }
 
 .nameandinfo .infolabel {
@@ -456,6 +491,11 @@ select {
   flex-direction: row;
   flex-grow:1;
   display: flex;
+}
+@media screen and (max-width: 1000px) {
+  .newevent .row {
+    flex-direction: column;
+  }
 }
 
 .newevent .eventname {
@@ -599,6 +639,11 @@ select {
   margin-bottom: 50px;
   border: 3px solid #eee;
 }
+@media screen and (max-width: 1000px) {
+  .leglist {
+    width: 80vw;
+  }
+}
 
 .leglist ul {
   height: 500px;
@@ -698,6 +743,11 @@ select {
   align-items: center;
   flex-grow: 7;
 }
+@media screen and (max-width: 1000px) {
+  .init {
+    flex-direction:column;
+  }
+}
 
 .pagecontainer {
   max-width: 100vw;
@@ -710,6 +760,11 @@ select {
   max-width: 50vw;
   padding: 50px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 1000px) {
+  .left, .right {
+    max-width: 80vw;
+  }
 }
 
 .right {
@@ -724,6 +779,11 @@ select {
   font-size: 4em;
   text-align: right;
 }
+@media screen and (max-width: 700px) {
+  .left h1 {
+    font-size: 2.5em;
+  }
+}
 
 .right .initialinput input {
   color: white;
@@ -733,6 +793,11 @@ select {
   border-bottom: 3px solid white;
   width: 25vw;
   text-align: center;
+}
+@media screen and (max-width: 1000px) {
+  .right .initialinput input {
+    width: 60%;
+  }
 }
 
 .initialinput button i:before {
@@ -766,6 +831,12 @@ select {
   justify-content:center;
   margin-top: 100px;
 }
+@media screen and (max-width: 1200px) {
+  .location {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .zipholder {
   display:flex;
   align-items:center;
@@ -786,11 +857,17 @@ select {
   background:none;
   border:1px solid #555;
 }
+@media screen and (max-width: 1200px) {
+  .resultspage .location .legislators .leglist {
+    max-width: 90vw;
+  }
+}
 
 .resultspage .leglist ul li {
   font-size: 12px;
   width: 280px;
 }
+
 
 .resultspage .leglist ul li img {
   height: 122px;
@@ -820,6 +897,7 @@ select {
   display: flex;
   flex-wrap:wrap;
   flex-direction:row;
+  justify-content: center;
 }
 .shortlegs li {
   width: 260px;
