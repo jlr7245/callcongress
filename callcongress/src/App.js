@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import Initial from './components/Initial';
 import FakeAuth from './components/FakeAuth';
 import Dashboard from './components/Dashboard';
+import Results from './components/Results';
 /// === KEYS & APIS === ///
 import fbaseAXIOS from './components/keys/key';
 import sunlightAXIOS from './components/keys/sunlight';
@@ -121,18 +122,27 @@ class App extends Component {
 
 
 
-  //// ===== INITIAL TO LOCATION SWITCH ==== ////
+  //// ===== INITIAL TO RESULTS SWITCH ==== ////
   getInput(e) {
     e.preventDefault();
-    console.log(e.target.zip.value);
-  }
+    let searchedZip = e.target.zip.value;
+    sunlightAXIOS.get(`legislators/locate?zip=${searchedZip}`)
+      .then((res) => {
+        let legIdArray = res.data.results.map((res) => {
+          return res.bioguide_id;
+        });
+        this.setState({
+          zipToWatch: searchedZip,
+          legsToRender: legIdArray,
+          pageType: 'results'
+        })
+      });
+    }
 
   //// ==== DASHBOARD METHODS ===== /////
   getSurroundingZips(i) {
     return zipAXIOS.get(`radius.json/${i}/30/mile?minimal`);
   }
-
-
 
   getLocationSenators(i, user) {
     sunlightAXIOS.get(`legislators/locate?zip=${i}`)
@@ -249,6 +259,10 @@ class App extends Component {
         eventEdited={this.state.eventEdited}
         saveEventEdit={this.saveEventEdit}
         />
+    } else if (this.state.pageType === 'results') {
+      return <Results
+        zip={this.state.zipToWatch}
+        legislatorsToLoad={this.state.legsToRender} />
     }
   }
 
