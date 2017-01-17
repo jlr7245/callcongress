@@ -74,7 +74,7 @@ class Dashboard extends React.Component {
             </div>
           </div>
           <div className='right-dash'>
-            <h3>You are watching the following topics:</h3>
+            <h3>You are watching these topics:</h3>
               <ul>
                 {this.listTopics()}
               </ul>
