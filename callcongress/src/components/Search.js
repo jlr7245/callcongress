@@ -40,7 +40,7 @@ class Search extends React.Component {
         <div className='searchbar'>
           <i className='fa fa-search fa-2x wht'></i>
           <input type='text' name='search'
-            placeholder='Type here'
+            placeholder='Type here to search.'
             onChange={(e) => this.handleChange(e)} />
         </div>
         <div className='shortlegs'>
