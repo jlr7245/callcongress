@@ -50,6 +50,7 @@ This was far & away the most complex part of creating the app, and took the long
 <dt>Author</dt>
 <dd>J Silverstein</dd>
 <dt>Credits</dt>
+<dd>Images are pulled from <a href='https://github.com/unitedstates/images'>The United States public data repo</a> (not government-run).</dd>
 <dd>Event icons are from a number of people on TheNounProject: Ana María Lora Macias, iconsphere, Lorena Salagre, Sherrinford, Juan Pablo Bravo, and Wilson Joseph.</dd>
 <dd>I was the recipient of some very helpful advice on stackoverflow: <a href="http://stackoverflow.com/questions/41654541/using-shouldcomponetupdate-to-break-a-state-set-loop" target="_blank">see here</a>.</dd>
 <dd>Most of the inspirational quotes on the home page are from the West Wing.</dd>
