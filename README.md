@@ -1,10 +1,10 @@
-#CallCongress.how
+# CallCongress.how
 ![Call Congress](https://raw.githubusercontent.com/jlr7245/callcongress/master/meta/sreenshot.jpg "callcongress.how")
 
-##What is CallCongress.how?
+## What is CallCongress.how?
 Now more than ever, the cultural paradigm is ripe for citizen political involvement. Division is high, freedoms are threatened, and legislators' phones are busier than ever. CallCongress.how provides easy access to legislator contact information and a platform to post political events.
 
-##Technical Discussion
+## Technical Discussion
 <dl>
 <dt>React.js</dt>
 <dd>This project was bootstrapped with <a href="https://github.com/facebookincubator/create-react-app" target="_blank">Create React App</a> and built using the React library. I made use of the power and speed of React to create a swift and beautiful user interface.</dd>
@@ -44,7 +44,7 @@ This was far & away the most complex part of creating the app, and took the long
 
 ![Login state wireframe](https://raw.githubusercontent.com/jlr7245/callcongress/master/meta/sat6.jpg)
 
-##The Making of CallCongress.How
+## The Making of CallCongress.How
 
 <dl>
 <dt>Author</dt>
@@ -56,7 +56,7 @@ This was far & away the most complex part of creating the app, and took the long
 <dd>Thanks to instructors Ariana and Vince for helping me work through authentication and API issues.</dd>
 </dl>
 
-##Opportunities for Future Growth
+## Opportunities for Future Growth
 While I am very pleased with how far I got in the time allotted for the project, there is always room for growth. Due to some troubles accessing APIs while developing locally, there were a number of features I was unable to add. Additionally, a few elements do not work as elegantly as they could. Here are the features I expected to be able to add in this stage of the project, but could not:
 
 - User's news topics populate with recent articles on page load
@@ -64,7 +64,7 @@ While I am very pleased with how far I got in the time allotted for the project,
 - The events are filtered by the user's zip code to only display events in the surrounding area.
 - From the search page, a logged-in user can click on a legislator in the search results and add them to their "watched senators" area on their dashboard.
 
-##Future Stages of Development
+## Future Stages of Development
 CallCongress.how has been a project of mine for some time. Initially envisioned as a static site serving up phone scripts to make calling congresspeople easier for those who may not be at their most eloquent on the phone, it's evolved in my mind into something more interactive. I don't think it'll ever be a full-blown social network, exactly, but it's evolved into a tool that can be used to build political momentum, keep voters informed about their legislators' activity, and bring like-minded people together.
 
 That being said, a resource of user-submitted phone scripts for political action would still be valuable, and I'd like to add in a way for users to add scripts and tag them with the appropriate bills, topics, people, or locations. This would also require a way to moderate the submitted scripts.
