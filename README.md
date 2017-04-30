@@ -13,7 +13,8 @@ Now more than ever, the cultural paradigm is ripe for citizen political involvem
 <dt>CSS3 Flexbox</dt>
 <dd>The fluidity and responsiveness of the site is due to styling it using CSS3 Flexbox.</dd>
 </dl>
-###Notes on app structure
+
+### Notes on app structure
 The app is driven by three main page types -- initial, dash, and search results -- and a login component that displays no matter what a user is doing on the site. Of these four elements, the login was the most complex to build, and required a lot of lifecycle methods and API calls to be made all at once. The login has its own state and cycles through four or five different login stages without the rest of the app needing to be aware of what it's doing.
 
 As an illustration, here is my `componentDidUpdate()` method from the login component.
